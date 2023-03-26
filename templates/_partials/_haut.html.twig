@@ -8,12 +8,13 @@
 		<!-- =====  BASIC PAGE NEEDS  ===== -->
 		<meta charset="utf-8">
 		<title>
-			{% block title %}Bienvenue {% endblock %}
+			{% block title %}Bienvenue
+			{% endblock %}
 		</title>
 		<!-- =====  SEO MATE  ===== -->
 		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-		<meta name="description" content="">
-		<meta name="keywords" content="">
+		<meta name="description" content="FINA SARL R.D Congo - Société des Technologie et d'Ingénierie, fabricaton des appareils éléctroménagers, système de commande à distance, gadgets high-tech à Lubumbashi - RD Congo">
+		<meta name="keywords" content="Briquets élétroniques, Michée Alonge, éléctroménagers, système de commande à distance, gadgets high tech, Lubumbashi, RD Congo, Katanga, qualité, bon prix, Mike, Ventes, made in africa ">
 		<meta name="distribution" content="global">
 		<meta name="revisit-after" content="2 Days">
 		<meta name="robots" content="ALL">
@@ -26,17 +27,17 @@
 		<meta
 		name="viewport" content="width=device-width">
 		<!-- =====  CSS  ===== -->
-		<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
-		<link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
-		<link rel="stylesheet" type="text/css" href="css/style.css">
-		<link rel="stylesheet" type="text/css" href="css/magnific-popup.css">
-		<link rel="stylesheet" type="text/css" href="css/owl.carousel.css">
-		<link rel="shortcut icon" href="images/favicon.png">
-		<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-		<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
-		<link
-		rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+		<link rel="stylesheet" type="text/css" href="{{asset('css/font-awesome.min.css')}}"/>
+		<link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap.css')}}"/>
+		<link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
+		<link rel="stylesheet" type="text/css" href="{{asset('css/magnific-popup.css')}}">
+		<link rel="stylesheet" type="text/css" href="{{asset('css/owl.carousel.css')}}">
 
+		<link rel="shortcut icon" href="{{asset('images/finacon.png')}}">
+		<link rel="apple-touch-icon" href="{{asset('images/apple-touch-icon.png')}}">
+		<link rel="apple-touch-icon" sizes="72x72" href="{{asset('images/apple-touch-icon-72x72.png')}}">
+		<link
+		rel="apple-touch-icon" sizes="114x114" href="{{asset('images/apple-touch-icon-114x114.png')}}">
 		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
 		{% block stylesheets %}
 			{{ encore_entry_link_tags('app') }}
@@ -83,15 +84,39 @@
 							<div class="col-xs-12 col-sm-4">
 								<div class="header-top-left">
 									<div class="contact">
-										<span class="hidden-xs hidden-sm hidden-md">Days a week from 9:00 am to 7:00 pm</span>
+										<span class="hidden-xs hidden-sm hidden-md">Livraison du Lundi au Samedi</span>
 									</div>
 								</div>
 							</div>
 							<div class="col-xs-12 col-sm-8">
 								<ul class="header-top-right text-right">
-									<li class="account">
-										<a href="login.html">My Account</a>
-									</li>
+									{% if app.user %}
+										<li class="currency dropdown">
+											<span class="dropdown-toggle" id="dropdownMenu12" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
+												Je t'aime
+												{{app.user|title }}
+												<span class="caret"></span>
+											</span>
+											<ul class="dropdown-menu" aria-labelledby="dropdownMenu12">
+												<li>
+													<a href="{#{url('app_user_show', {id: app.user.id })}#}">Mon profile
+													</a>
+												</li>
+												<li>
+													<a href="{#{url('app_achat_index')}#}">Mes achats
+													</a>
+												</li>
+												<li>
+													<a href="{{url('app_logout')}}">Déconnexion</a>
+												</li>
+											</ul>
+										</li>
+									{% else %}
+										<li class="account">
+											<a href="{{url('app_login')}}">Mon compte
+											</a>
+										</li>
+									{% endif %}
 									<li class="language dropdown">
 										<span class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">Language
 											<span class="caret"></span>
@@ -101,28 +126,15 @@
 												<a href="#">English</a>
 											</li>
 											<li>
-												<a href="#">French</a>
-											</li>
-											<li>
-												<a href="#">German</a>
+												<a href="#">Français</a>
 											</li>
 										</ul>
 									</li>
 									<li class="currency dropdown">
-										<span class="dropdown-toggle" id="dropdownMenu12" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">Currency
-											<span class="caret"></span>
+										<span class="dropdown-togglerr bg-success text-black" id="dropdownMenu12" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
+											$ 500
+											{# <span class="caret"></span> #}
 										</span>
-										<ul class="dropdown-menu" aria-labelledby="dropdownMenu12">
-											<li>
-												<a href="#">€ Euro</a>
-											</li>
-											<li>
-												<a href="#">£ Pound Sterling</a>
-											</li>
-											<li>
-												<a href="#">$ US Dollar</a>
-											</li>
-										</ul>
 									</li>
 								</ul>
 							</div>
@@ -154,86 +166,27 @@
 										<span id="cart-total">items (0)</span>
 									</button>
 								</div>
-								<div id="cart-dropdown" class="cart-menu collapse">
-									<ul>
-										<li>
-											<table class="table table-striped">
-												<tbody>
-													<tr>
-														<td class="text-center">
-															<a href="#"><img src="images/product/70x84.jpg" alt="iPod Classic" title="iPod Classic"></a>
-														</td>
-														<td class="text-left product-name">
-															<a href="#">MacBook Pro</a>
-															<span class="text-left price">$20.00</span>
-															<input class="cart-qty" name="product_quantity" min="1" value="1" type="number">
-														</td>
-														<td class="text-center">
-															<a class="close-cart">
-																<i class="fa fa-times-circle"></i>
-															</a>
-														</td>
-													</tr>
-													<tr>
-														<td class="text-center">
-															<a href="#"><img src="images/product/70x84.jpg" alt="iPod Classic" title="iPod Classic"></a>
-														</td>
-														<td class="text-left product-name">
-															<a href="#">MacBook Pro</a>
-															<span class="text-left price">$20.00</span>
-															<input class="cart-qty" name="product_quantity" min="1" value="1" type="number">
-														</td>
-														<td class="text-center">
-															<a class="close-cart">
-																<i class="fa fa-times-circle"></i>
-															</a>
-														</td>
-													</tr>
-												</tbody>
-											</table>
-										</li>
-										<li>
-											<table class="table">
-												<tbody>
-													<tr>
-														<td class="text-right">
-															<strong>Sub-Total</strong>
-														</td>
-														<td class="text-right">$2,100.00</td>
-													</tr>
-													<tr>
-														<td class="text-right">
-															<strong>Eco Tax (-2.00)</strong>
-														</td>
-														<td class="text-right">$2.00</td>
-													</tr>
-													<tr>
-														<td class="text-right">
-															<strong>VAT (20%)</strong>
-														</td>
-														<td class="text-right">$20.00</td>
-													</tr>
-													<tr>
-														<td class="text-right">
-															<strong>Total</strong>
-														</td>
-														<td class="text-right">$2,122.00</td>
-													</tr>
-												</tbody>
-											</table>
-										</li>
-										<li>
-											<form action="cart_page.html">
-												<input class="btn pull-left mt_10" value="View cart" type="submit">
-											</form>
-											<form action="checkout_page.html">
-												<input class="btn pull-right mt_10" value="Checkout" type="submit">
-											</form>
-										</li>
-									</ul>
-								</div>
+
+								{# panier flottant  #}
+								{% include "_partials/_panier_flottant.html.twig" %}
+
 							</div>
 						</div>
+
+						{# read and display all flash messages #}
+						{% for label, messages in app.flashes %}
+							{% for message in messages %}
+								<div class="mb-2 alert alert-danger">
+									<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+									<strong>
+										🗑
+										{# {{ label|title }} #}
+										!</strong>
+									{{ message }}
+								</div>
+							{% endfor %}
+						{% endfor %}
+
 						<nav class="navbar">
 							<p>menu</p>
 							<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".js-navbar-collapse">
