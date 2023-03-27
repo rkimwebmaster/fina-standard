@@ -8,8 +8,7 @@
 		<!-- =====  BASIC PAGE NEEDS  ===== -->
 		<meta charset="utf-8">
 		<title>
-			{% block title %}Bienvenue
-			{% endblock %}
+			{% block title %}Bienvenue{% endblock %} Fina SARL
 		</title>
 		<!-- =====  SEO MATE  ===== -->
 		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -19,7 +18,7 @@
 		<meta name="revisit-after" content="2 Days">
 		<meta name="robots" content="ALL">
 		<meta name="rating" content="8 YEARS">
-		<meta name="Language" content="en-us">
+		<meta name="Language" content="fr-fr">
 		<meta
 		name="GOOGLEBOT" content="NOARCHIVE">
 		<!-- =====  MOBILE SPECIFICATION  ===== -->
@@ -118,7 +117,7 @@
 										</li>
 									{% endif %}
 									<li class="language dropdown">
-										<span class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">Language
+										<span class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">Langue
 											<span class="caret"></span>
 										</span>
 										<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -145,24 +144,26 @@
 					<div class="container">
 						<div class="row">
 							<div class="col-xs-12 col-sm-4">
-								<div class="main-search mt_40">
-									<input id="search-input" name="search" value="" placeholder="Search" class="form-control input-lg" autocomplete="off" type="text">
-									<span class="input-group-btn">
-										<button type="button" class="btn btn-default btn-lg">
-											<i class="fa fa-search"></i>
-										</button>
-									</span>
-								</div>
-							</div>
-							<div class="navbar-header col-xs-6 col-sm-4">
-								<a class="navbar-brand" href="index.html">
-									<img alt="themini" src="images/logo.png">
-								</a>
-							</div>
+						<div class="main-search mt_40">
+							<form class="form-inline" action="{{url('app_produit_recherche')}}" method="get">
+								<input id="search-input" name="search" value="" placeholder="Produit puis entrer" class="form-control input-lg" autocomplete="off" type="text">
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-default btn-lg">
+										<i class="fa fa-search"></i>
+									</button>
+								</span>
+							</form>
+						</div>
+					</div>
+					<div class="navbar-header col-xs-6 col-sm-4">
+						<a class="navbar-brand" href="{{url('app_accueil')}}">
+							<img alt="themini" src="{{asset('images/logo2.png')}}">
+						</a>
+					</div>
 							<div class="col-xs-6 col-sm-4 shopcart">
 								<div id="cart" class="btn-group btn-block mtb_40">
 									<button type="button" class="btn" data-target="#cart-dropdown" data-toggle="collapse" aria-expanded="true">
-										<span id="shippingcart">Shopping cart</span>
+										<span id="shippingcart">Mon panier</span>
 										<span id="cart-total">items (0)</span>
 									</button>
 								</div>
@@ -196,146 +197,118 @@
 							</button>
 							<div class="collapse navbar-collapse js-navbar-collapse">
 								<ul id="menu" class="nav navbar-nav">
-									<li>
-										<a href="index.html">Home</a>
-									</li>
-									<li class="dropdown mega-dropdown">
-										<a href="#" class="dropdown-toggle" data-toggle="dropdown">Collection
-										</a>
-										<ul class="dropdown-menu mega-dropdown-menu row">
-											<li class="col-md-3">
+							<li>
+								<a href="{{url("app_accueil")}}">Accueil</a>
+							</li>
+							{# {% if is_granted('ROLE_ADMIN') %}
+						    <li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">DashBoard
+								</a>
+								<ul class="dropdown-menu">
+											<li>
+												<a href="#">Etat Achat</a>
+											</li>
+											<li>
+												<a href="#">Divers </a>
+											</li>
+								</ul>
+							</li>
+							{% endif %} #}
+							<li class="dropdown mega-dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Produits
+								</a>
+								<ul class="dropdown-menu mega-dropdown-menu row">
+									{% if categories is defined %}
+										{% for categorie in categories %}
+											<li class="col-md-3 ">
 												<ul>
-													<li class="dropdown-header">Women's</li>
+													<li class="dropdown-header">{{categorie|title }}</li>
+													{% for produit in categorie.produits %}
+														<li>
+															<a href="{{url('product_view',{id: produit.id })}}">{{produit|title }}</a>
+														</li>
+													{% endfor %}
 													<li>
-														<a href="#">Unique Features</a>
-													</li>
-													<li>
-														<a href="#">Image Responsive</a>
-													</li>
-													<li>
-														<a href="#">Auto Carousel</a>
-													</li>
-													<li>
-														<a href="#">Newsletter Form</a>
-													</li>
-													<li>
-														<a href="#">Four columns</a>
-													</li>
-													<li>
-														<a href="#">Four columns</a>
-													</li>
-													<li>
-														<a href="#">Good Typography</a>
+														<a href="{{url('app_produit_index')}}">Tous les produits</a>
 													</li>
 												</ul>
+												<br/>
 											</li>
-											<li class="col-md-3">
-												<ul>
-													<li class="dropdown-header">Man's</li>
-													<li>
-														<a href="#">Unique Features</a>
-													</li>
-													<li>
-														<a href="#">Image Responsive</a>
-													</li>
-													<li>
-														<a href="#">Four columns</a>
-													</li>
-													<li>
-														<a href="#">Auto Carousel</a>
-													</li>
-													<li>
-														<a href="#">Newsletter Form</a>
-													</li>
-													<li>
-														<a href="#">Four columns</a>
-													</li>
-													<li>
-														<a href="#">Good Typography</a>
-													</li>
-												</ul>
-											</li>
-											<li class="col-md-3">
-												<ul>
-													<li class="dropdown-header">Children's</li>
-													<li>
-														<a href="#">Unique Features</a>
-													</li>
-													<li>
-														<a href="#">Four columns</a>
-													</li>
-													<li>
-														<a href="#">Image Responsive</a>
-													</li>
-													<li>
-														<a href="#">Auto Carousel</a>
-													</li>
-													<li>
-														<a href="#">Newsletter Form</a>
-													</li>
-													<li>
-														<a href="#">Four columns</a>
-													</li>
-													<li>
-														<a href="#">Good Typography</a>
-													</li>
-												</ul>
-											</li>
-											<li class="col-md-3">
-												<ul>
-													<li id="myCarousel" class="carousel slide" data-ride="carousel">
-														<div class="carousel-inner">
-															<div class="item active">
-																<a href="#"><img src="images/menu-banner1.jpg" class="img-responsive" alt="Banner1"></a>
-															</div>
-															<!-- End Item -->
-															<div class="item">
-																<a href="#"><img src="images/menu-banner2.jpg" class="img-responsive" alt="Banner1"></a>
-															</div>
-															<!-- End Item -->
-															<div class="item">
-																<a href="#"><img src="images/menu-banner3.jpg" class="img-responsive" alt="Banner1"></a>
-															</div>
-															<!-- End Item -->
+										{% endfor %}
+									{% endif %}
+
+									<li class="col-md-3">
+										<ul>
+											<li id="myCarousel" class="carousel slide" data-ride="carousel">
+												<div class="carousel-inner">
+													<div class="item active">
+														{% if entreprise.imageMenu1 is defined  %}
+														<a href="#"><img src="{{asset('uploads/images/produits/' ~ entreprise.imageMenu1)}}" alt="{{entreprise.imageMenu1}}" class="img-responsive" ></a>
+														{% else %}
+														<a href="#"><img src="{{asset('images/menu-banner1.jpg')}}" class="img-responsive" alt="Banner1"></a>
+														{% endif %}
+
+													</div>
+													<!-- End Item -->
+													<div class="item">
+														{% if entreprise.imageMenu2 is defined %}
+														<a href="#"><img src="{{asset('uploads/images/produits/' ~ entreprise.imageMenu2)}}" alt="{{entreprise.imageMenu2}}" class="img-responsive" ></a>
+														{% else %}
+														<a href="#"><img src="{{asset('images/menu-banner2.jpg')}}" class="img-responsive" alt="Banner1"></a>
+														{% endif %}											
 														</div>
-														<!-- End Carousel Inner -->
-													</li>
-													<!-- /.carousel -->
-												</ul>
+													<!-- End Item -->
+													<div class="item">
+														{% if entreprise.imageMenu3 is defined %}
+														<a href="#"><img src="{{asset('uploads/images/produits/' ~ entreprise.imageMenu3)}}" alt="{{entreprise.imageMenu3}}" class="img-responsive" ></a>
+														{% else %}
+														<a href="#"><img src="{{asset('images/menu-banner3.jpg')}}" class="img-responsive" alt="Banner1"></a>
+														{% endif %}													
+														</div>
+													<!-- End Item -->
+												</div>
+												<!-- End Carousel Inner -->
 											</li>
+											<!-- /.carousel -->
 										</ul>
-									</li>
-									<li>
-										<a href="category_page.html">Shop</a>
-									</li>
-									<li>
-										<a href="blog_page.html">Blog</a>
-									</li>
-									<li class="dropdown">
-										<a href="#" class="dropdown-toggle" data-toggle="dropdown">Pages
-										</a>
-										<ul class="dropdown-menu">
-											<li>
-												<a href="cart_page.html">Cart</a>
-											</li>
-											<li>
-												<a href="checkout_page.html">Checkout</a>
-											</li>
-											<li>
-												<a href="product_detail_page.html">Product Detail Page</a>
-											</li>
-											<li>
-												<a href="single_blog.html">Single Post</a>
-											</li>
-										</ul>
-									</li>
-									<li>
-										<a href="about.html">About us</a>
-									</li>
-									<li>
-										<a href="contact_us.html">Contact us</a>
 									</li>
 								</ul>
+							</li>
+							{% if services is defined and services|length > 0 %}
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Services
+								</a>
+								<ul class="dropdown-menu">
+										{% for service in services %}
+											<li>
+												<a href="{{url("app_service", {id: service.id })}}">{{ service|title  }}</a>
+											</li>
+										{% endfor %}
+								</ul>
+							</li>
+							{% endif %}
+							<li>
+								<a href="{{url("app_qsn")}}">Qui sommes-nous?</a>
+							</li>
+							{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+							<li >
+								<a href="{{url("app_achat_index")}}">Historique des achats </a>
+							</li>
+							{% endif %}
+
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Nous contacter
+								</a>
+								<ul class="dropdown-menu">
+											<li>
+												<a href="{{url("app_contact")}}">Laisser un message</a>
+											</li>
+											<li>
+												<a href="https://api.whatsapp.com/send?phone=243824458059">Chat WhatsApp</a>
+											</li>
+								</ul>
+							</li>
+						</ul>
 							</div>
 							<!-- /.nav-collapse -->
 						</nav>

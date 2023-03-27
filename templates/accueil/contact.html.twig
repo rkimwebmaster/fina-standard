@@ -1,0 +1,102 @@
+{% extends "base.html.twig" %}
+{% block innerPage %}
+	Ecrivez nous, nous vous rappellons
+{% endblock %}
+  {% block title %}	Contact !{% endblock %}
+  {% block body %}
+          <div class="row">
+
+            <div class="col-md-4 col-xs-12 contact">
+
+<div class="Career mb_50">
+	<h5 class="capitalize mb_20">
+		<strong>Contact whatsapp </strong>
+	</h5>
+	<div class="address">
+	Chattez directement avec un de nos agent sur whatsapp.
+	</div>
+	<div class="email mt_10">
+		<i class="fa fa-whatsapp" aria-hidden="true"></i>
+		<a title="Chatter sur WhatAspp"  href="https://api.whatsapp.com/send?phone=243824458059" target="_top">
+		{% if entreprise is defined %}
+			{{entreprise.phoneNumber}}
+		{% else %}
+			+243 97 89 24 080
+		{% endif %}
+
+		</a>
+	</div>
+</div>
+<div class="location mb_50">
+	<h5 class="capitalize mb_20">
+		<strong>Nos adresses</strong>
+	</h5>
+	<div class="address">Siège social
+		<br>
+		{{ entreprise.adresse|title}}
+		<br>
+		en diagonal de la brasserie du Katanga</div>
+	<div class="call mt_10">
+		<i class="fa fa-phone" aria-hidden="true"></i>{{entreprise.phoneNumber}}</div>
+</div>
+
+<div class="Hello mb_50">
+	<h5 class="capitalize mb_20">
+		<strong>{{entreprise.sigle|upper}} </strong>
+	</h5>
+	<div class="address">Société des Technologies et d'Ingénierie, fabricaton des appareils éléctroménagers, système de commande à distance, gadgets high-tech à Lubumbashi - R.D Congo   </div>
+	<div class="email mt_10">
+		<i class="fa fa-envelope" aria-hidden="true"></i>
+		<a href="mailto:{{entreprise.email}}" target="_top">{{entreprise.email|upper}}</a>
+	</div>
+</div>
+
+            </div>
+
+            <div class="col-md-8 col-xs-12 contact-form mb_50">
+
+<!-- Contact FORM -->
+              <div id="contact_form">
+                <form id="contact_body" method="get" action="{{url('app_creationContact')}}">
+                  <!--                                <label class="full-with-form" ><span>Name</span></label>
+-->
+                  <input class="full-with-form " type="text" name="nom" placeholder="Nom " data-required="true" />
+                  <!--                <label class="full-with-form" ><span>Email Address</span></label>
+-->
+                  <input class="full-with-form  mt_30" type="email" name="email" placeholder="Email Address" data-required="true" />
+                  <!--                <label class="full-with-form" ><span>Phone Number</span></label>
+-->
+                  <input class="full-with-form  mt_30" type="text" name="telephone" placeholder="Téléphone" maxlength="15" data-required="true" />
+                  <!--                <label class="full-with-form" ><span>Subject</span></label>
+-->
+                  <input class="full-with-form  mt_30" type="text" name="sujet" placeholder="Sujet" data-required="true">
+                  <!--                                <label class="full-with-form" ><span>Attachment</span></label>
+-->
+                  <!--                                <label class="full-with-form" ><span>Message</span></label>
+-->
+                  <textarea class="full-with-form  mt_30" name="message" placeholder="Message" data-required="true"></textarea>
+                  <button class="btn mt_30" type="submit">Envoyer Message</button>
+                </form>
+                <div id="contact_results">
+                <!-- ici sera le message flash  -->
+                </div>
+              </div>
+              <!-- END Contact FORM -->
+            </div>
+          </div>
+          <!-- map  -->
+          <div class="row">
+
+            <div class="col-xs-12 map mb_80">
+
+              <div id="maping">
+			  {# <iframe src="https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d15630.186016728436!2d27.477089517949814!3d-11.655629352326498!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0x19723ecf15060d09%3A0x3c701411e30d11ff!2sAv.%20Luvwa%2C%20Lubumbashi!3m2!1d-11.6556505!2d27.4858443!5e0!3m2!1sfr!2scd!4v1671602586440!5m2!1sfr!2scd" width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> #}
+			  {% include "_partials/_map.google.html.twig" %}
+			  </div>
+
+
+
+            </div>
+
+          </div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Facture {{ achat.id|title }} {% endblock %}
+
+{% block body %}
+<div class="row">
+				<div class="col col-12">
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Date Achat</th>
+                <td>{{ achat.dateAchat ? achat.dateAchat|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Date Livraison</th>
+                <td>{{ achat.dateLivraison ? achat.dateLivraison|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Prix Total</th>
+                <td> USD {{ achat.prixTotal }}</td>
+            </tr>
+            <tr>
+                <th>Numero Réference</th>
+                <td>{{ achat.numeroReference }}</td>
+            </tr>
+            <tr>
+                <th>Etat</th>
+                <td>{{ achat.etat }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-success" href="{{ path('app_achat_index') }}">Voir tout mes achats</a>
+
+    {# {{ include('achat/_delete_form.html.twig') }} #}
+
+    </div>
+</div>
+{% endblock %}

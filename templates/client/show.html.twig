@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Client{% endblock %}
+
+{% block body %}
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Login</th>
+                <td>{{ client.utilisateur.email }}</td>
+            </tr>
+            <tr>
+                <th>Code Client</th>
+                <td>{{ client.codeClient }}</td>
+            </tr>
+            <tr>
+                <th>Noms </th>
+                <td>{{ client.identite }}</td>
+            </tr>
+            <tr>
+                <th>Adresse </th>
+                <td>{{ client.adresse }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <a class='btn btn-default' href="{{ path('app_client_edit', {'id': client.id}) }}">modifier infos </a>
+    <a class='btn btn-default' href="{{ path('app_client_edit', {'id': client.id}) }}">modifier mot de passe </a>
+
+    {# {{ include('client/_delete_form.html.twig') }} #}
+{% endblock %}

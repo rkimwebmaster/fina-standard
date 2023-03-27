@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editer profile 
+{% endblock %}
+
+{% block body %}
+	<!-- product section -->
+	{# <div class="my-custom-class-for-errors">
+	        {{ form_errors(form) }}
+	    </div> #}
+
+	{{ form_start(form) }}
+
+		<div class="row"> 
+				<div class="col col-md-6">
+		{{ form_row(form.identite.nom) }}
+				</div>
+				<div class="col col-md-6">
+		{{ form_row(form.identite.postnom) }}
+				</div>
+				<div class="col col-md-6">
+		{{ form_row(form.identite.prenom) }}
+				</div>
+			<div class="col col-md-6">
+			{{ form_row(form.email) }}
+			</div>
+			<div class="col col-md-4">
+		{{ form_row(form.adresse.telephone) }}
+				</div>
+				<div class="col col-md-8">
+		{{ form_row(form.adresse.adresse) }}
+				</div>
+				<div class="col col-md-6">
+		{{ form_row(form.adresse.ville) }}
+				</div>
+				<div class="col col-md-6">
+		{{ form_row(form.adresse.pays) }}
+				</div>
+				
+	</div>
+<div class="row">
+	<div class="col col-md-12">
+	<a class="btn btn-primary pull left" href="{{ path('app_user_reset_password') }}">Changer mot de passe</a>
+
+		<button type="submit" class="btn btn-default btn-primary pull-right">
+			<span class="fa fa-user">
+				Enregistrer
+			</button>
+		</div>
+	</div>
+	{{ form_end(form) }}
+
+</div>
+
+</div>
+
+{% endblock %}

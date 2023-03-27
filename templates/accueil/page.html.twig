@@ -1,0 +1,97 @@
+{% extends "base.html.twig" %}
+{% block innerPage %}
+	FINA SARL
+{% endblock %}
+{% block ariane1 %}
+	Qui sommes-nous?
+{% endblock %}
+{% block ariane2 %}
+	Qui sommes-nous?
+{% endblock %}
+{% block body %}
+	<div class="row">
+		<div class="col-md-12">
+			{% if indice is defined and indice=="qsn" %}
+				<figure>
+					<img src="{{asset('uploads/images/produits/' ~ categories[0].photo1170x500)}}" alt="{{entreprise.nomEntreprise}}" title="{{entreprise.nomEntreprise}}" class="img-responsive"/>
+				</figure>
+			{% else %}
+				<figure>
+					<img src="{{asset('uploads/images/produits/' ~ page.photo1170x500)}}" alt="{{page.designation}}" title="{{page.designation}}" class="img-responsive"/>
+				</figure>
+			{% endif %}
+		</div>
+		<div class="col-md-12">
+			<div class="about-text">
+				<div class="about-heading-wrap">
+					<h2 class="about-heading mb_20 mt_40 ptb_10">
+						{% if indice is defined and indice=="qsn" %}
+							{{entreprise.nomEntreprise}}
+						{% elseif indice is defined and indice=="service" %}
+							{{page.designation}}
+						{% endif %}
+					</h2>
+				</div>
+				<p>
+					{{page|raw}}
+				</p>
+				{# <button type="button" class="btn mt_30">HIRE ME</button> #}
+			</div>
+		</div>
+	</div>
+	<!-- end arrival section -->
+	{% if indice is defined and indice=="qsn" %}
+
+		{% if teamMembers is defined and teamMembers|length > 0 %}
+			<div class="heading-part mb_10">
+				<h2 class="main_title mt_50">Notre équipe managériale</h2>
+			</div>
+			<div class="team_grid box">
+				<div class="team3col  owl-carousel">
+					{% for teamMember in teamMembers %}
+						<div class="item team-detail">
+							<div class="team-item-img">
+								<img src="images/tm1.jpg" alt=""/>
+							</div>
+							<div class="team-designation mt_20">{{teamMember.fonction}}</div>
+							<h4 class="team-title  mtb_10">{{teamMember.noms}}
+							</h4>
+							<p>
+								{{teamMember.description}}
+							</p>
+							<ul class="social mt_20 mb_80">
+								<li>
+									<a href="https://www.facebook.com/" target="_blank">
+										<i class="fa fa-facebook"></i>
+									</a>
+								</li>
+								<li>
+									<a href="https://www.twitter.com/" target="_blank">
+										<i class="fa fa-twitter"></i>
+									</a>
+								</li>
+								<li>
+									<a href="https://www.dribbble.com/" target="_blank">
+										<i class="fa fa-dribbble"></i>
+									</a>
+								</li>
+								<li>
+									<a href="https://www.pinterest.com/" target="_blank">
+										<i class="fa fa-pinterest"></i>
+									</a>
+								</li>
+								<li>
+									<a href="https://www.behance.net/" target="_blank">
+										<i class="fa fa-behance"></i>
+									</a>
+								</li>
+							</ul>
+						</div>
+					{% endfor %}
+
+				</div>
+				<!--End Team Carousel -->
+			</div>
+		{% endif %}
+	{% endif %}
+{% endblock %}

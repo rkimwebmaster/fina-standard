@@ -1,0 +1,161 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau Achat
+{% endblock %}
+{% block innerPage %}
+	Confirmation d'achat
+{% endblock %}
+
+{% block body %}
+
+
+	<div class="row ">
+		<div class="col-sm-12 col-12 col-md-12 col-lg-12 mtb_20">
+			<form enctype="multipart/form-data" method="post" action="#">
+				<div class="table-responsive">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<td class="text-center">Image</td>
+								<td class="text-left">Libéllé Produit
+								</td>
+								{# <td class="text-left">Model</td> #}
+								<td class="text-left">Quantité</td>
+								<td class="text-right">Prix unitaire
+								</td>
+								<td class="text-right">Total</td>
+							</tr>
+						</thead>
+						<tbody>
+							{% for element in dataPanier %}
+								<tr>
+									<td class="text-center">
+										<a href="#"><img src="{{asset('uploads/images/produits/' ~ element.produit.photoPrincipale)}}" alt="{{asset('uploads/images/produits/' ~ element.produit.nom)}}" title="{{asset('uploads/images/produits/' ~ element.produit.nom)}}"></a>
+									</td>
+									<td class="text-left">
+										<a href="product.html">{{element.produit.nom|upper}}</a>
+									</td>
+									{# <td class="text-left">
+									{% for categorie in element.produit.categories %}
+									{{ categorie }}
+									{% endfor %}
+									</td> #}
+									<td class="text-left">
+										<div style="max-width: 200px;" class="input-group btn-block">
+											<input type="text" class="form-control quantity" disabled size="1" value="{{element.quantite}}" name="quantity">
+											<span class="input-group-btn">
+												<a href="{{url('cart_add',{'id': element.produit.id })}}" class="btn" title="" data-toggle="tooltip" data-original-title="Ajouter ">
+													<i class="fa fa-plus-circle"></i>
+												</a>
+												<a href="{{url('cart_remove',{'id': element.produit.id })}}"  class="btn btn-danger" title="" data-toggle="tooltip" type="button" data-original-title="Soustraire">
+													<i class="fa fa-minus-circle"></i>
+												</a>
+											</span>
+										</div>
+									</td>
+									<td class="text-right">${{element.produit.prixVente / 100 }}</td>
+									<td class="text-right">${{element.produit.prixVente / 100 * element.quantite }}</td>
+								</tr>
+							{% else %}
+								<tr>
+									<td class="text-center text-danger " colspan="5">Votre panier est vide
+									</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</tbody>
+				</table>
+			</div>
+		</form>
+		{% if dataPanier|length > 0 %}
+		<div class="row">
+			<div class="col-sm-4 col-sm-offset-8">
+				<table class="table table-bordered">
+					<tbody>
+						<tr>
+							<td class="text-right">
+								<strong>Sous-Total:</strong>
+							</td>
+							<td class="text-right">$ {{total / 100 }}</td>
+						</tr>
+						<tr>
+							{# <td class="text-right">
+								<strong>Expeditions (2.00 %):</strong>
+							</td> #}
+							{# <td class="text-right">$ </td> #}
+						</tr>
+						<tr>
+							<td class="text-right">
+								<strong>Total:</strong>
+							</td>
+							<td class="text-right">$ {{total / 100 }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		{% endif %}
+		{% if dataPanier|length > 0 %}
+			<p class="text-warning">
+			<i>
+				En faisant vos achats sur notre plateforme, vous accepter les conditions de paiement et de remboursement des achats.
+			</i>
+			</p>
+			<div class="panel-group mt_20" id="accordion">
+				<div class="panel panel-default pull-left">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Conditions des livraisons
+								<i class="fa fa-caret-down"></i>
+							</a>
+						</h4>
+					</div>
+					<div id="collapseTwo" class="panel-collapse collapse">
+						<div class="panel-body">
+							<p>
+							{% if conditions_livraison is defined and conditions_livraison|length > 0  %}
+							{{conditions_livraison|raw}}
+							{% else %}
+							Les conditions ventes ne sont pas encore spécifié par le vendeur 
+							{% endif %}
+							{# Les conditions ventes ne sont pas encore spécifié par le vendeur  #}
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default pull-left">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Choisir votre opérateur mobile money
+								<i class="fa fa-caret-down"></i>
+							</a>
+						</h4>
+					</div>
+					<div id="collapseOne" class="panel-collapse collapse in">
+						<div class="panel-body">
+							{# <form class="form-horizontal"> #}
+<form method="post" action="{{ path('app_achat_new') }}" onsubmit="return confirm('Confirmez-vous avoir lu les conditions et vouloir faire cette achat?');">
+    {{ form_widget(form) }}
+    <button class="btn pull-right btn-success">{{ button_label|default('Clôturer achat') }}</button>
+</form>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+{% endif %}
+		<form action="{{url('app_produit_index')}}">
+			<input	title="Retour sur les produits" class="btn btn-warning pull-left mt_30" type="submit" value="Continuer les achats "/>
+		{# <a href="class="btn pull-left mt_30""> Continuer les achats </a> #}
+		</form>
+		{% if dataPanier|length > 0 %}
+		<form action="{{url('app_panier_delete_all')}}">
+			<input	class="btn btn-danger pull-right mt_30" type="submit" value="Vider le panier  "/>
+		</form>
+		{% endif %}
+	</div>
+</div>
+</div>
+
+
+{% endblock %}
