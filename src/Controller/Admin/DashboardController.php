@@ -20,6 +20,7 @@ use App\Entity\Recherche;
 use App\Entity\Service;
 use App\Entity\TeamMember;
 use App\Entity\User;
+use App\Entity\ZoneLivraison;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -67,6 +68,11 @@ class DashboardController extends AbstractDashboardController
             MenuItem::subMenu('Produits')->setSubItems([
                 MenuItem::linkToCrud('Liste ', 'fa fa-tags', Produit::class)->setAction(Crud::PAGE_INDEX),
                 MenuItem::linkToCrud('Nouveau', 'fa fa-plus-circle', Produit::class)->setAction(Crud::PAGE_NEW),
+
+            ]),
+            MenuItem::subMenu('Zones de Livraison')->setSubItems([
+                MenuItem::linkToCrud('Liste ', 'fa fa-tags', ZoneLivraison::class)->setAction(Crud::PAGE_INDEX),
+                MenuItem::linkToCrud('Nouveau', 'fa fa-plus-circle', ZoneLivraison::class)->setAction(Crud::PAGE_NEW),
 
             ]),
             MenuItem::subMenu('Page Qui Sommes-nous')->setSubItems([

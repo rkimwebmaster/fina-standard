@@ -14,7 +14,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Table(name: '`user`')]
 #[ORM\HasLifecycleCallbacks()]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -60,6 +59,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\ManyToOne]
     private ?TcPays $codePays = null;
+
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?ZoneLivraison $zoneLivraisonPreferentielle = null;
 
     
 
@@ -286,6 +288,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCodePays(?TcPays $codePays): self
     {
         $this->codePays = $codePays;
+
+        return $this;
+    }
+
+    public function getZoneLivraisonPreferentielle(): ?ZoneLivraison
+    {
+        return $this->zoneLivraisonPreferentielle;
+    }
+
+    public function setZoneLivraisonPreferentielle(?ZoneLivraison $zoneLivraisonPreferentielle): self
+    {
+        $this->zoneLivraisonPreferentielle = $zoneLivraisonPreferentielle;
 
         return $this;
     }

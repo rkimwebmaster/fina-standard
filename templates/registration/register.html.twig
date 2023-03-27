@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Création d'un compte client  
+{% block title %}Création d'un compte client
 {% endblock %}
 {% block ariane %}
 	{{parent() }}
-	Gestion de profile 
+	Gestion de profile
 {% endblock %}
 {% block lesboutons %}
 
@@ -22,69 +22,100 @@
 {% block body %}
 	<!-- product section -->
 	{# <div class="my-custom-class-for-errors">
-	        {{ form_errors(form) }}
-	    </div> #}
+		        {{ form_errors(form) }}
+		    </div> #}
 
 	{{ form_start(registrationForm) }}
 
-		<div class="row"> 
-				<div class="col col-md-6">
-		{{ form_row(registrationForm.identite.nom) }}
-				</div>
-				<div class="col col-md-6">
-		{{ form_row(registrationForm.identite.postnom) }}
-				</div>
-				<div class="col col-md-6">
-		{{ form_row(registrationForm.identite.prenom) }}
-				</div>
-			<div class="col col-md-6">
+		<div class="row"> <div class="col col-md-4">
+			{{ form_row(registrationForm.identite.nom) }}
+		</div>
+		<div class="col col-md-4">
+			{{ form_row(registrationForm.identite.postnom) }}
+		</div>
+		<div class="col col-md-4">
+			{{ form_row(registrationForm.identite.prenom) }}
+		</div>
+		<div class="col col-md-4">
 			{{ form_row(registrationForm.email) }}
-			</div>
-			<div class="col col-md-6">
+		</div>
+		<div class="col col-md-4">
 			{{ form_row(registrationForm.password.first, {
             label: 'Mot de passe '
         }) }}
-			</div>
-			<div class="col col-md-6">
+		</div>
+		<div class="col col-md-4">
 			{{ form_row(registrationForm.password.second, {
             label: 'Répéter le mot de passe '
         }) }}
-			</div>
-			
-				<div class="col col-md-12">
-		{{ form_row(registrationForm.adresse.adresse) }}
-				</div>
-				<div class="col col-md-4">
-		{{ form_row(registrationForm.adresse.pays) }}
-				</div>
-				<div class="col col-md-4">
-		{{ form_row(registrationForm.adresse.telephone) }}
-				</div>
-				<div class="col col-md-4">
-		{{ form_row(registrationForm.adresse.ville) }}
-				</div>
-				
-				{# <div class="col col-md-6">
-		{{ form_row(registrationForm.adresse.pays) }}
-				</div> #}
-				
-	</div>
-<div class="row">
-	<div class="col col-md-6">
-		{{ form_row(registrationForm.agreeTerms) }}
-	</div>
-	<div class="col col-md-6">
-		<button type="submit" class="btn btn-default btn-primary pull-right">
-			<span class="fa fa-user">
-				Enregistrer
-			</button>
 		</div>
+		<div class="col col-md-4">
+			{{ form_row(registrationForm.adresse.telephone) }}
+		</div>
+		<div class="col col-md-4">
+			{{ form_row(registrationForm.adresse.ville) }}
+		</div>
+		<div class="col col-md-4">
+			{{ form_row(registrationForm.adresse.pays) }}
+		</div>
+		<div class="col col-md-8">
+			{{ form_row(registrationForm.adresse.adresse) }}
+		</div>
+		<div class="col col-md-4">
+			{{ form_row(registrationForm.zoneLivraisonPreferentielle) }}
+		</div>
+		{# <div class="col col-md-6">
+				{{ form_row(registrationForm.adresse.pays) }}
+						</div> #}
+
 	</div>
-	{{ form_end(registrationForm) }}
+	<div class="row">
+	<div class="col-12">
+			&nbsp; 
+			<a class="btn bnt-link" data-toggle="modal" data-target="#myModal">Lire les conditions d'utilisation</a>
+			<br /><br />
+	</div>
+	</div>
+	<div class="row">
+		<div class="col col-md-6">
+			{{ form_row(registrationForm.agreeTerms) }}
+		</div>
+		<div class="col col-md-6">
+			<button type="submit" class="btn btn-default btn-primary pull-right">
+				<span class="fa fa-user">
+					Enregistrer
+				</button>
+			</div>
+		</div>
+		{{ form_end(registrationForm) }}
+
+	</div>
 
 </div>
 
-</div>
-
-
+<!-- Modal -->
+  <div class="modal fade modal-dark" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Conditions d'inscriptions et utilisation</h4>
+        </div>
+        <div class="modal-body">
+          <p>
+		  Some text in the modal. Some text in the modal. Some text in the modal.Some text in the modal.Some text in the modal.
+		  Some text in the modal. Some text in the modal. Some text in the modal.Some text in the modal.Some text in the modal.
+		  Some text in the modal. Some text in the modal. Some text in the modal.Some text in the modal.Some text in the modal.
+		  Some text in the modal. Some text in the modal. Some text in the modal.Some text in the modal.Some text in the modal.
+		  </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">fermer</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 {% endblock %}
