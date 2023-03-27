@@ -77,17 +77,19 @@
 					{% if entreprise is defined and entreprise|length > 0 %}
 						<li>{{entreprise.adresse|title}}</li>
 						<li>
-						<a href="https://api.whatsapp.com/send?phone=243824458059">
-						{{entreprise.phoneNumber}}
-						</a>
+							<a href="https://api.whatsapp.com/send?phone=243824458059">
+								{{entreprise.phoneNumber}}
+							</a>
 						</li>
 						<li>
-						<a href="mailto:{{entreprise.email}} " >
-						{{entreprise.email}}
-						</a>
+							<a href="mailto:{{entreprise.email}} ">
+								{{entreprise.email}}
+							</a>
 						</li>
 						<li>
-							<a href="https://finasarl.com/"> {{entreprise.website}} </a>
+							<a href="https://finasarl.com/">
+								{{entreprise.website}}
+							</a>
 						</li>
 					{% endif %}
 				</ul>
@@ -119,33 +121,38 @@
 					<div class="payment-icon text-right">
 						<ul>
 							<li>
-								<img src="{{asset('images/mobileMoney1.png')}}" class="fa fa-cc-paypal ">
+								<img title="M-Pesa paiement" src="{{asset('images/mobileMoney1.png')}}" class="fa fa-cc-paypal ">
 							</li>
-						</i>
-					</li>
-					<li>
-						<img src="{{asset('images/mobileMoney2.png')}}" class="fa fa-cc-paypal ">
-					</li>
-				</i>
-			</li>
-			<li>
-				<img src="{{asset('images/mobileMoney3.png')}}" class="fa fa-cc-paypal ">
-			</li>
-		</i>
-	</li>
-	<li>
-		<img src="{{asset('images/mobileMoney4.png')}}" class="fa fa-cc-paypal ">
-	</li>
-</i></li></ul></div></div></div></div></div></div><!-- =====  FOOTER END  ===== --><a id="scrollup"></a>
-		<script src="{{asset('js/jQuery_v3.1.1.min.js')}}"></script>
-		<script src="{{asset('js/owl.carousel.min.js')}}"></script>
-		<script src="{{asset('js/bootstrap.min.js')}}"></script>
-		<script src="{{asset('js/jquery.magnific-popup.js')}}"></script>
-		<script src="{{asset('js/custom.js')}}"></script>
-		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAT3mI0RI16q19Oxv93gSxN0cF0wfxWN6w">
-		</script>
-		<script src="{{asset('js/map.js')}}"></script>
-		<script src="{{asset('js/mail.js')}}"></script>
-	</body>
-
-</html>
+							<li>
+								<img title="OrangeMoney paiement" src="{{asset('images/mobileMoney2.png')}}" class="fa fa-cc-paypal ">
+							</li>
+							<li>
+								<img title="AirtelMoney paiement" src="{{asset('images/mobileMoney3.png')}}" class="fa fa-cc-paypal ">
+							</li>
+							<li>
+								<img title="MaxiCash paiement" src="{{asset('images/paiemaxicash.jpg')}}" class="fa fa-cc-paypal ">
+							</li>
+							<li>
+								<img title="Pepele Mobile paiement" src="{{asset('images/paiepepele.jpg')}}" class="fa fa-cc-paypal ">
+							</li>
+							<li>
+								<img title="Paypal paiement" src="{{asset('images/paiepaypal.jpg')}}" class="fa fa-cc-paypal ">
+							</li>
+							<li>
+								<img title="AfriMoney paiement" src="{{asset('images/mobileMoney4.png')}}" class="fa fa-cc-paypal ">
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div><!-- =====  FOOTER END  ===== --><a id="scrollup"></a>
+<script src="{{asset('js/jQuery_v3.1.1.min.js')}}"></script>
+<script src="{{asset('js/owl.carousel.min.js')}}"></script>
+<script src="{{asset('js/bootstrap.min.js')}}"></script>
+<script src="{{asset('js/jquery.magnific-popup.js')}}"></script>
+<script src="{{asset('js/custom.js')}}"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAT3mI0RI16q19Oxv93gSxN0cF0wfxWN6w"></script>
+<script src="{{asset('js/map.js')}}"></script>
+<script src="{{asset('js/mail.js')}}"></script></body></html>
