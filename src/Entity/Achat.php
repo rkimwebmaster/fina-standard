@@ -26,14 +26,6 @@ class Achat
     #[ORM\Column]
     private ?float $prixTotal = null;
 
-    // #[ORM\ManyToOne(inversedBy: 'achats')]
-    // #[ORM\JoinColumn(nullable: false)]
-    // private ?Client $client = null;
-
-    #[ORM\ManyToOne(inversedBy: 'achats')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?MobileMoney $mobileMoney = null;
-
     #[ORM\Column(length: 255)]
     private ?string $numeroReference = null;
 
@@ -69,7 +61,11 @@ class Achat
     private ?User $user = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $etat = null;  
+    private ?string $etat = null;
+
+    #[ORM\ManyToOne(inversedBy: 'achats')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Client $client = null;  
 
     public function getCodeClient(){
         if($this->getUser()){
@@ -170,30 +166,6 @@ class Achat
     public function setPrixTotal(float $prixTotal): self
     {
         $this->prixTotal = $prixTotal;
-
-        return $this;
-    }
-
-    // public function getClient(): ?Client
-    // {
-    //     return $this->client;
-    // }
-
-    // public function setClient(?Client $client): self
-    // {
-    //     $this->client = $client;
-
-    //     return $this;
-    // }
-
-    public function getMobileMoney(): ?MobileMoney
-    {
-        return $this->mobileMoney;
-    }
-
-    public function setMobileMoney(?MobileMoney $mobileMoney): self
-    {
-        $this->mobileMoney = $mobileMoney;
 
         return $this;
     }
@@ -332,6 +304,18 @@ class Achat
     public function setEtat(string $etat): self
     {
         $this->etat = $etat;
+
+        return $this;
+    }
+
+    public function getClient(): ?Client
+    {
+        return $this->client;
+    }
+
+    public function setClient(?Client $client): self
+    {
+        $this->client = $client;
 
         return $this;
     }

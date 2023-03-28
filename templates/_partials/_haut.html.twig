@@ -129,12 +129,6 @@
 											</li>
 										</ul>
 									</li>
-									<li class="currency dropdown">
-										<span class="dropdown-togglerr bg-success text-black" id="dropdownMenu12" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
-											$ 500
-											{# <span class="caret"></span> #}
-										</span>
-									</li>
 								</ul>
 							</div>
 						</div>
@@ -161,15 +155,8 @@
 						</a>
 					</div>
 							<div class="col-xs-6 col-sm-4 shopcart">
-								<div id="cart" class="btn-group btn-block mtb_40">
-									<button type="button" class="btn" data-target="#cart-dropdown" data-toggle="collapse" aria-expanded="true">
-										<span id="shippingcart">Mon panier</span>
-										<span id="cart-total">items (0)</span>
-									</button>
-								</div>
-
 								{# panier flottant  #}
-								{% include "_partials/_panier_flottant.html.twig" %}
+								{{ render (url('panier_flottant'))}}
 
 							</div>
 						</div>

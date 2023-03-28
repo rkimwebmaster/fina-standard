@@ -1,38 +1,39 @@
+<div id="cart" class="btn-group btn-block mtb_40">
+	<button type="button" class="btn" data-target="#cart-dropdown" data-toggle="collapse" aria-expanded="true">
+		<span id="shippingcart">Mon panier</span>
+		<span id="cart-total">items ({{quantiteProduits}})</span>
+	</button>
+</div>
 <div id="cart-dropdown" class="cart-menu collapse">
 	<ul>
 		<li>
 			<table class="table table-striped">
 				<tbody>
-					<tr>
-						<td class="text-center">
-							<a href="#"><img src="images/product/70x84.jpg" alt="iPod Classic" title="iPod Classic"></a>
-						</td>
-						<td class="text-left product-name">
-							<a href="#">Lave main</a>
-							<span class="text-left price">$20.00</span>
-							<input class="cart-qty" name="product_quantity" min="1" value="1" type="number">
-						</td>
-						<td class="text-center">
-							<a class="close-cart">
-								<i class="fa fa-times-circle"></i>
-							</a>
-						</td>
-					</tr>
-					<tr>
-						<td class="text-center">
-							<a href="#"><img src="images/product/70x84.jpg" alt="iPod Classic" title="iPod Classic"></a>
-						</td>
-						<td class="text-left product-name">
-							<a href="#">Briquet électronique</a>
-							<span class="text-left price">$20.00</span>
-							<input class="cart-qty" name="product_quantity" min="1" value="1" type="number">
-						</td>
-						<td class="text-center">
-							<a class="close-cart">
-								<i class="fa fa-times-circle"></i>
-							</a>
-						</td>
-					</tr>
+					{% for element in dataPanier %}
+						<tr>
+							<td class="text-center">
+								<a href="#"><img width="30px" src="{{asset('uploads/images/produits/' ~ element.produit.photo624x800Premier)}}" alt="{{element.produit.nom}}" title="{{element.produit.nom}}"></a>
+							</td>
+							<td class="text-left product-name">
+								<a href="#">{{element.produit.nom|upper}}</a>
+								<span class="text-left price">${{element.produit.prixVente }}</span>
+								<input disabled class="cart-qty" name="product_quantity" min="1" value="{{element.quantite}}" type="number">
+							</td>
+							<td class="text-center">
+								<a class="close-cart" href="{{url('cart_remove',{'id': element.produit.id })}}">
+									<i class="fa fa-times-circle"></i>
+								</a>
+								<a class="close-cart" href="{{url('cart_add',{'id': element.produit.id })}}">
+									<i class="fa fa-plus-circle"></i>
+								</a>
+							</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td class="text-center" colspan="2">Votre panier est vide
+							</td>
+						</tr>
+					{% endfor %}
 				</tbody>
 			</table>
 		</li>
@@ -41,38 +42,36 @@
 				<tbody>
 					<tr>
 						<td class="text-right">
-							<strong>Sub-Total</strong>
+							<strong>Sous-Total</strong>
 						</td>
-						<td class="text-right">$2,100.00</td>
+						<td class="text-right">$ {{total}}</td>
 					</tr>
 					<tr>
 						<td class="text-right">
-							<strong>Eco Tax (-2.00)</strong>
+							<strong>Frais Livraison</strong>
 						</td>
 						<td class="text-right">$2.00</td>
 					</tr>
 					<tr>
 						<td class="text-right">
-							<strong>VAT (20%)</strong>
-						</td>
-						<td class="text-right">$20.00</td>
-					</tr>
-					<tr>
-						<td class="text-right">
 							<strong>Total</strong>
 						</td>
-						<td class="text-right">$2,122.00</td>
+						<td class="text-right">$ {{total}}</td>
 					</tr>
 				</tbody>
 			</table>
 		</li>
 		<li>
-			<form action="cart_page.html">
-				<input class="btn pull-left mt_10" value="View cart" type="submit">
-			</form>
-			<form action="checkout_page.html">
-				<input class="btn pull-right mt_10" value="Checkout" type="submit">
-			</form>
+			{% if dataPanier|length > 0 %}
+				<form action="{{url('cart_index')}}">
+					<input
+					title="Voir le panier" class="btn btn-danger pull-left mt_30" type="submit" value="Panier"/>
+				{# <a href="class="btn pull-left mt_30""> Continuer les achats </a> #}
+				</form>
+				<form action="{{url('app_achat_new')}}">
+					<input title="Etape suivante" class="btn btn-success pull-right mt_30" type="submit" value="Suivant "/>
+				</form>
+			{% endif %}
 		</li>
 	</ul>
 </div>

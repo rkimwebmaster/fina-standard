@@ -8,6 +8,7 @@ use App\Entity\NewsLetter;
 use App\Entity\PageTermCondition;
 use App\Entity\Produit;
 use App\Entity\Service;
+use App\Entity\User;
 use App\Repository\CategorieRepository;
 use App\Repository\ContactRepository;
 use App\Repository\NewsLetterRepository;
@@ -18,25 +19,41 @@ use App\Repository\PartenaireRepository;
 use App\Repository\ProduitRepository;
 use App\Repository\ServiceRepository;
 use App\Repository\TeamMemberRepository;
+use App\Repository\UserRepository;
+// use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AccueilController extends AbstractController
 {
     #[Route('/', name: 'app_accueil')]
-    public function index(ProduitRepository $produitRepository, ServiceRepository $serviceRepository): Response
+    public function index(Security $security, UserRepository $userRepository, UserPasswordHasherInterface $hasher): Response
     {        
-        $session = new Session();
-        $totalItems=$session->get('totalItems', 0);
+        $checkUser=$userRepository->findOneBy([]);
+        // dd($checkUser);
+        if(!$checkUser){
+            $user=new User();
+            $user->setEmail('admin@ice.cd');
+            $user->setRoles(['ROLE_ADMIN']);
+            $user->setRolePrincipal("Administrateur Initial");
+            $plainPassword='Afric@2023';
+            $hashedPassword=$hasher->hashPassword($user, $plainPassword);
+            $user->setPassword($hashedPassword);
+            // dd($hashedPassword);
+            $userRepository->save($user, true);
+            $security->login($user);
+            $this->addFlash('info','Ceci est un compte admin par défaut, prière de changer le mot de passe.... Urgemment');
+            $this->addFlash('info','Vous devez configurer l\'application completement afin de le rendre utilisable ');
+            $this->addFlash('info','Créez les infos de l\'entreprise et toutes autres parametres utiles, Urgemment....');         
 
-        $produits = $produitRepository->findAll();
-        $services = $serviceRepository->findAll();
+        }
+
         return $this->render('accueil/index.html.twig', [
-            'produits' => $produits,
-            'services' => $services,
         ]);
     }
 

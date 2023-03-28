@@ -18,7 +18,7 @@
 	<div class="email mt_10">
 		<i class="fa fa-whatsapp" aria-hidden="true"></i>
 		<a title="Chatter sur WhatAspp"  href="https://api.whatsapp.com/send?phone=243824458059" target="_top">
-		{% if entreprise is defined %}
+		{% if entreprise.id is defined %}
 			{{entreprise.phoneNumber}}
 		{% else %}
 			+243 97 89 24 080
@@ -33,21 +33,37 @@
 	</h5>
 	<div class="address">Siège social
 		<br>
+		{% if entreprise.id is defined %}
 		{{ entreprise.adresse|title}}
+		{% endif %}
 		<br>
 		en diagonal de la brasserie du Katanga</div>
 	<div class="call mt_10">
-		<i class="fa fa-phone" aria-hidden="true"></i>{{entreprise.phoneNumber}}</div>
+		<i class="fa fa-phone" aria-hidden="true"></i>
+				{% if entreprise.id is defined %}
+		{{entreprise.phoneNumber}}
+		{% else %}
+		pas encore configuré 
+		{% endif %}
+		</div>
 </div>
 
 <div class="Hello mb_50">
 	<h5 class="capitalize mb_20">
-		<strong>{{entreprise.sigle|upper}} </strong>
+		<strong>
+		{% if entreprise.id is defined %}
+		{{entreprise.sigle|upper}} 
+		{% endif %}
+		</strong>
 	</h5>
 	<div class="address">Société des Technologies et d'Ingénierie, fabricaton des appareils éléctroménagers, système de commande à distance, gadgets high-tech à Lubumbashi - R.D Congo   </div>
 	<div class="email mt_10">
 		<i class="fa fa-envelope" aria-hidden="true"></i>
+		{% if entreprise.id is defined %}
 		<a href="mailto:{{entreprise.email}}" target="_top">{{entreprise.email|upper}}</a>
+		{% else %}
+		Non configuré
+		{% endif %}
 	</div>
 </div>
 

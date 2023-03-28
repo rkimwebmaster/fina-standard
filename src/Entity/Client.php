@@ -27,13 +27,6 @@ class Client
     #[ORM\Column(length: 255)]
     private ?string $codeClient = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $utilisateur = null;
-
-    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Achat::class)]
-    private Collection $achats;
-
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
@@ -46,11 +39,21 @@ class Client
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Achat::class)]
+    private Collection $achats;
+
+    #[ORM\ManyToOne(inversedBy: 'clients')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?ZoneLivraison $zoneLivraisonPreferentielle = null;
+
+    #[ORM\OneToOne(mappedBy: 'client', cascade: ['persist', 'remove'])]
+    private ?User $utilisateur = null;
+
 
     #[ORM\PrePersist]
     #[ORM\PreUpdate]
     public function misAJour(){
-        $this->email=$this->getAdresse()->getEmail();
+        // $this->email=$this->getAdresse()->getEmail();
     }
     
     public function getCreatedAt(): ?\DateTimeImmutable
@@ -79,9 +82,9 @@ class Client
 
     public function __construct()
     {
-        $this->achats = new ArrayCollection();
         $this->codeClient=strtoupper(uniqid('CL-'));
         $this->createdAt=new \DateTimeImmutable();
+        $this->achats = new ArrayCollection();
         
 
     }
@@ -127,14 +130,21 @@ class Client
         return $this;
     }
 
-    public function getUtilisateur(): ?User
+    public function setEmail(string $email): self
     {
-        return $this->utilisateur;
+        $this->email = $email;
+
+        return $this;
     }
 
-    public function setUtilisateur(User $utilisateur): self
+    public function getPassword(): ?string
     {
-        $this->utilisateur = $utilisateur;
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
 
         return $this;
     }
@@ -169,27 +179,34 @@ class Client
         return $this;
     }
 
-    public function getEmail(): ?string
+    public function getZoneLivraisonPreferentielle(): ?zoneLivraison
     {
-        return $this->email;
+        return $this->zoneLivraisonPreferentielle;
     }
 
-    public function setEmail(string $email): self
+    public function setZoneLivraisonPreferentielle(?zoneLivraison $zoneLivraisonPreferentielle): self
     {
-        $this->email = $email;
+        $this->zoneLivraisonPreferentielle = $zoneLivraisonPreferentielle;
 
         return $this;
     }
 
-    public function getPassword(): ?string
+    public function getUtilisateur(): ?User
     {
-        return $this->password;
+        return $this->utilisateur;
     }
 
-    public function setPassword(string $password): self
+    public function setUtilisateur(User $utilisateur): self
     {
-        $this->password = $password;
+        // set the owning side of the relation if necessary
+        if ($utilisateur->getClient() !== $this) {
+            $utilisateur->setClient($this);
+        }
+
+        $this->utilisateur = $utilisateur;
 
         return $this;
     }
+
+    
 }

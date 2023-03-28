@@ -20,6 +20,7 @@ class PanierController extends AbstractController
      */
     public function index(SessionInterface $session, ProduitRepository $produitRepository): Response
     {
+
         $panier=$session->get('panier',[]);
         $dataPanier=[];
         $prixTotalPanier=0;
@@ -36,11 +37,40 @@ class PanierController extends AbstractController
     
             }
         }
-        // dd("salut");
-        return $this->redirectToRoute('app_achat_new', [], Response::HTTP_SEE_OTHER);
-
-        // dd($quantiteProduits);
+        
         return $this->render('panier/index.html.twig', [
+            "dataPanier"=>$dataPanier,
+            "total"=>$prixTotalPanier,
+            "quantiteProduits"=>$quantiteProduits,
+        ]);
+    }
+
+
+    
+    /**
+     * @Route("/panierFlottant", name="panier_flottant")
+     */
+    public function panierFlottant(SessionInterface $session, ProduitRepository $produitRepository): Response
+    {
+
+        $panier=$session->get('panier',[]);
+        $dataPanier=[];
+        $prixTotalPanier=0;
+        $quantiteProduits=0;
+        foreach($panier as $id=>$quantite){
+            $produit=$produitRepository->find($id);
+            if($produit){
+                $dataPanier[]=[
+                    'produit'=>$produit,
+                    'quantite'=>$quantite,
+                ];
+                $prixTotalPanier +=$produit->getPrixVente() * $quantite;
+                $quantiteProduits +=$quantite;
+    
+            }
+        }
+        
+        return $this->render('_partials/_panier_flottant.html.twig', [
             "dataPanier"=>$dataPanier,
             "total"=>$prixTotalPanier,
             "quantiteProduits"=>$quantiteProduits,
@@ -53,6 +83,7 @@ class PanierController extends AbstractController
      */
     public function add(Produit $produit, SessionInterface $session): Response
     {
+
         $id=$produit->getId();
         $panier=$session->get('panier',[]);
         if(!empty($panier[$id])){

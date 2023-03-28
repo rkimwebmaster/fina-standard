@@ -6,6 +6,7 @@ use App\Entity\Adresse;
 use App\Entity\Entreprise;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CountryField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
@@ -43,7 +44,7 @@ class EntrepriseCrudController extends AbstractCrudController
             TextField::new('rccm')->hideOnIndex(),
             TextField::new('adresse')->hideOnIndex(),
             TextField::new('ville')->hideOnIndex(),
-            TextField::new('pays'),
+            CountryField::new('pays'),
             // TextField::new('description'),
             // TextField::new('description'),
             // TextField::new('websiteEntreprise')->hideOnIndex(),

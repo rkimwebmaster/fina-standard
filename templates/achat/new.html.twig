@@ -30,7 +30,7 @@
 							{% for element in dataPanier %}
 								<tr>
 									<td class="text-center">
-										<a href="#"><img src="{{asset('uploads/images/produits/' ~ element.produit.photoPrincipale)}}" alt="{{asset('uploads/images/produits/' ~ element.produit.nom)}}" title="{{asset('uploads/images/produits/' ~ element.produit.nom)}}"></a>
+										<a href="#"><img src="{{asset('uploads/images/produits/' ~ element.produit.photo624x800Premier)}}" alt="{{asset('uploads/images/produits/' ~ element.produit.nom)}}" title="{{asset('uploads/images/produits/' ~ element.produit.nom)}}"></a>
 									</td>
 									<td class="text-left">
 										<a href="product.html">{{element.produit.nom|upper}}</a>
@@ -95,6 +95,7 @@
 			</div>
 		</div>
 		{% endif %}
+		
 		{% if dataPanier|length > 0 %}
 			<p class="text-warning">
 			<i>
@@ -158,4 +159,5 @@
 </div>
 
 
+		
 {% endblock %}

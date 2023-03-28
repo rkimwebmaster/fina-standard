@@ -11,14 +11,16 @@
 {% block body %}
 	<div class="row">
 		<div class="col-md-12">
-			{% if indice is defined and indice=="qsn" %}
+			{% if indice is defined and indice=="qsn" and categories|length > 0 %}
 				<figure>
 					<img src="{{asset('uploads/images/produits/' ~ categories[0].photo1170x500)}}" alt="{{entreprise.nomEntreprise}}" title="{{entreprise.nomEntreprise}}" class="img-responsive"/>
 				</figure>
 			{% else %}
+				{% if page.photo is defined  %}
 				<figure>
 					<img src="{{asset('uploads/images/produits/' ~ page.photo1170x500)}}" alt="{{page.designation}}" title="{{page.designation}}" class="img-responsive"/>
 				</figure>
+				{% endif %}
 			{% endif %}
 		</div>
 		<div class="col-md-12">
@@ -26,14 +28,18 @@
 				<div class="about-heading-wrap">
 					<h2 class="about-heading mb_20 mt_40 ptb_10">
 						{% if indice is defined and indice=="qsn" %}
-							{{entreprise.nomEntreprise}}
+							{% if entreprise.id is defined %}
+							{{entreprise.nomEntreprise }}
+							{% endif %}
 						{% elseif indice is defined and indice=="service" %}
 							{{page.designation}}
 						{% endif %}
 					</h2>
 				</div>
 				<p>
+					{% if page is defined %}
 					{{page|raw}}
+					{% endif %}
 				</p>
 				{# <button type="button" class="btn mt_30">HIRE ME</button> #}
 			</div>

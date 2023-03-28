@@ -43,13 +43,13 @@ class AchatController extends AbstractController
             return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
 
         }
-        ///verifier que le mobile money sont déja configuré 
-        $mobileMoneys = $mobileMoneyRepository->findAll();
+        // ///verifier que le mobile money sont déja configuré 
+        // $mobileMoneys = $mobileMoneyRepository->findAll();
         
-        if(sizeof($mobileMoneys)==0){
-            $this->addFlash('info','Contacter pour création des mobiles money....');
-            return $this->redirectToRoute('app_accueil', [], Response::HTTP_SEE_OTHER);
-        }
+        // if(sizeof($mobileMoneys)==0){
+        //     $this->addFlash('info','Contacter pour création des mobiles money....');
+        //     return $this->redirectToRoute('app_accueil', [], Response::HTTP_SEE_OTHER);
+        // }
         $conditions_livraison=$pageLivraisonRepository->findOneBy([],['createdAt'=>'desc']);
 
         $email=$user->getEmail();
@@ -106,7 +106,7 @@ class AchatController extends AbstractController
         }
 
         return $this->renderForm('achat/new.html.twig', [
-            'mobileMoneys' => $mobileMoneys,
+            // 'mobileMoneys' => $mobileMoneys,
             'total' => $total,
             'dataPanier' => $dataPanier,
             'achat' => $achat,

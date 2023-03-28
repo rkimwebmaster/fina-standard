@@ -27,7 +27,9 @@
 							{% for element in dataPanier %}
 								<tr>
 									<td class="text-center">
-										<a href="#"><img src="{{asset('uploads/images/produits/' ~ element.produit.photoPrincipale)}}" alt="iPod Classic" title="iPod Classic"></a>
+										<a href="#">
+											<img class="" width="50px" src="{{asset('uploads/images/produits/' ~ element.produit.photo624x800Premier)}}" alt="iPod Classic" title="iPod Classic">
+										</a>
 									</td>
 									<td class="text-left">
 										<a href="product.html">{{element.produit.nom|upper}}</a>
@@ -104,7 +106,7 @@
 		{# <a href="class="btn pull-left mt_30""> Continuer les achats </a> #}
 		</form>
 		<form action="{{url('app_achat_new')}}">
-			<input class="btn btn-success pull-right mt_30" type="submit" value="Confirmer achat "/>
+			<input class="btn btn-success pull-right mt_30" type="submit" value="Etape suivante  "/>
 		</form>
 		{% endif %}
 	</div>

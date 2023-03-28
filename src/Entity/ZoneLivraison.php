@@ -34,6 +34,9 @@ class ZoneLivraison
     #[ORM\OneToMany(mappedBy: 'zoneLivraisonPreferentielle', targetEntity: User::class)]
     private Collection $users;
 
+    #[ORM\OneToMany(mappedBy: 'zoneLivraisonPreferentielle', targetEntity: Client::class)]
+    private Collection $clients;
+
     public function __toString()
     {
         return $this->zone."-> Coût : ".$this->prix;
@@ -42,6 +45,7 @@ class ZoneLivraison
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->clients = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -133,6 +137,36 @@ class ZoneLivraison
             // set the owning side to null (unless already changed)
             if ($user->getZoneLivraisonPreferentielle() === $this) {
                 $user->setZoneLivraisonPreferentielle(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Client>
+     */
+    public function getClients(): Collection
+    {
+        return $this->clients;
+    }
+
+    public function addClient(Client $client): self
+    {
+        if (!$this->clients->contains($client)) {
+            $this->clients->add($client);
+            $client->setZoneLivraisonPreferentielle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClient(Client $client): self
+    {
+        if ($this->clients->removeElement($client)) {
+            // set the owning side to null (unless already changed)
+            if ($client->getZoneLivraisonPreferentielle() === $this) {
+                $client->setZoneLivraisonPreferentielle(null);
             }
         }
 

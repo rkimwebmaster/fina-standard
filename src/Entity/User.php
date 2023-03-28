@@ -42,60 +42,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $rolePrincipal = "Client du Shop";
 
-    #[ORM\Column(length: 255)]
-    private ?string $codeClient = null;
-
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Identite $identite = null;
-
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Adresse $adresse = null;
-
-    #[ORM\Column]
-    private ?bool $isClientOrdinaire = null;
-
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Achat::class)]
-    private Collection $achats;
-
     #[ORM\ManyToOne]
     private ?TcPays $codePays = null;
 
-    #[ORM\ManyToOne(inversedBy: 'users')]
-    private ?ZoneLivraison $zoneLivraisonPreferentielle = null;
+    #[ORM\OneToOne(inversedBy: 'utilisateur', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Client $client = null;
 
-    
-
-    
     #[ORM\PrePersist]
-    public function misAJour(){
-        $this->codeClient=strtoupper(uniqid('CL-'));
-        if(in_array('ROLE_ADMIN', $this->getRoles())){
-            $this->rolePrincipal="Administrateur ";
+    public function misAJour()
+    {
+        if (in_array('ROLE_ADMIN', $this->getRoles())) {
+            $this->rolePrincipal = "Administrateur ";
         }
     }
 
     public function __toString()
     {
-        if($this->getIdentite()){
-            $nom=$this->getIdentite()->getNom();
-        }else{
-            $nom=explode('@', $this->email);
-            $nom= strtoupper($nom[0]);
-        }
-
+        $nom = explode('@', $this->email);
+        $nom = strtoupper($nom[0]);
         return $nom;
     }
 
     public function __construct()
     {
-        $this->createdAt=new \DateTimeImmutable();
-        $this->updatedAt=new \DateTimeImmutable();
-        $this->isClientOrdinaire=true;
+        $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
         $this->setRoles(['ROLE_CLIENT']);
-        $this->achats = new ArrayCollection();
     }
 
-    
+
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
@@ -201,85 +177,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
-    public function getCodeClient(): ?string
-    {
-        return $this->codeClient;
-    }
-
-    public function setCodeClient(string $codeClient): self
-    {
-        $this->codeClient = $codeClient;
-
-        return $this;
-    }
-
-    public function getIdentite(): ?Identite
-    {
-        return $this->identite;
-    }
-
-    public function setIdentite(?Identite $identite): self
-    {
-        $this->identite = $identite;
-
-        return $this;
-    }
-
-    public function getAdresse(): ?Adresse
-    {
-        return $this->adresse;
-    }
-
-    public function setAdresse(?Adresse $adresse): self
-    {
-        $this->adresse = $adresse;
-
-        return $this;
-    }
-
-    public function isIsClientOrdinaire(): ?bool
-    {
-        return $this->isClientOrdinaire;
-    }
-
-    public function setIsClientOrdinaire(bool $isClientOrdinaire): self
-    {
-        $this->isClientOrdinaire = $isClientOrdinaire;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Achat>
-     */
-    public function getAchats(): Collection
-    {
-        return $this->achats;
-    }
-
-    public function addAchat(Achat $achat): self
-    {
-        if (!$this->achats->contains($achat)) {
-            $this->achats->add($achat);
-            $achat->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAchat(Achat $achat): self
-    {
-        if ($this->achats->removeElement($achat)) {
-            // set the owning side to null (unless already changed)
-            if ($achat->getUser() === $this) {
-                $achat->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getCodePays(): ?TcPays
     {
         return $this->codePays;
@@ -292,16 +189,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getZoneLivraisonPreferentielle(): ?ZoneLivraison
+    public function getClient(): ?Client
     {
-        return $this->zoneLivraisonPreferentielle;
+        return $this->client;
     }
 
-    public function setZoneLivraisonPreferentielle(?ZoneLivraison $zoneLivraisonPreferentielle): self
+    public function setClient(Client $client): self
     {
-        $this->zoneLivraisonPreferentielle = $zoneLivraisonPreferentielle;
+        $this->client = $client;
 
         return $this;
     }
-
 }
