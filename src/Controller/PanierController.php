@@ -76,13 +76,17 @@ class PanierController extends AbstractController
 
         $user=$this->getUser();
         if($user){
-            $fraisLivraison=$user->getClient()->getZoneLivraisonPreferentielle()->getPrix();
+            if($user->getClient()){
+                $fraisLivraison=$user->getClient()->getZoneLivraisonPreferentielle()->getPrix();
+            }else{
+                $fraisLivraison=0;             
+            }
         }else{
             
             $this->addFlash("success", "Vous n'avez pas le profile client");
             $fraisLivraison=0;            
         }
-        
+
         foreach($panier as $id=>$quantite){
             $produit=$produitRepository->find($id);
             if($produit){
