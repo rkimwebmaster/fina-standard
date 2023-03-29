@@ -31,15 +31,17 @@ class ClientController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user=$this->getUser();
-            
+
             $user->setClient($client);
 
             $entityManager->persist($user);
             $entityManager->persist($client);
 
+            $this->addFlash("success", "Merci admin d'avoir créer un compte client....");
+
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_accueil', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('client/new.html.twig', [

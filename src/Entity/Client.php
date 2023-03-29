@@ -33,12 +33,6 @@ class Client
     #[ORM\Column(nullable:true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $email = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $password = null;
-
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Achat::class)]
     private Collection $achats;
 
@@ -125,25 +119,6 @@ class Client
     public function setCodeClient(string $codeClient): self
     {
         $this->codeClient = $codeClient;
-
-        return $this;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
-
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
 
         return $this;
     }

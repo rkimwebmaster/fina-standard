@@ -3,6 +3,27 @@
 {% block title %}Facture {{ achat.id|title }} {% endblock %}
 
 {% block body %}
+
+<form action="https://api.maxicashapp.com/PayEntryPost" method="POST" target="_blank" >
+    <input type="hidden" name="PayType" value="MaxiCash">
+    <input type="hidden" name="Amount" value="{{achat.prixTotal}}">
+    <input type="hidden" name="Currency" value="MaxiDollar">
+    <input type="hidden" name="Telephone" value="{{achat.client.adresse.telephone}}">
+ <input type="hidden" name="Email" value="{{achat.client.utilisateur.email}}">
+   
+    <input type="hidden" name="MerchantID" value="e2a76ec8cd314053a08809c985568485">
+    <input type="hidden" name="MerchantPassword" value="bb309cc7b2cc4ab697a5a3b789b7d0c2">
+    <input type="hidden" name="Language" value="En">
+    <input type="hidden" name="Reference" value="{{achat.id}}">
+    <input type="hidden" name="accepturl" value="{{url('app_achat_reussi')}}">
+    <input type="hidden" name="cancelurl" value="{{url('app_achat_annule')}}">
+    <input type="hidden" name="declineurl" value="{{url('app_achat_echoue')}}">
+    <input type="hidden" name="notifyurl" value="{{url('app_achat_notify')}}">
+    <button type="submit" class="btn btn-block btn-primary">
+        Payez cash
+    </button>
+	</form>
+
 <div class="row">
 				<div class="col col-12">
     <table class="table">
@@ -18,10 +39,6 @@
             <tr>
                 <th>Prix Total</th>
                 <td> USD {{ achat.prixTotal }}</td>
-            </tr>
-            <tr>
-                <th>Numero Réference</th>
-                <td>{{ achat.numeroReference }}</td>
             </tr>
             <tr>
                 <th>Etat</th>

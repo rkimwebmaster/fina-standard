@@ -26,8 +26,8 @@ class Achat
     #[ORM\Column]
     private ?float $prixTotal = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $numeroReference = null;
+    // #[ORM\Column(length: 255)]
+    // private ?string $numeroReference = null;
 
     #[ORM\Column]
     private ?bool $isApprouve = null;
@@ -174,17 +174,17 @@ class Achat
         return $this;
     }
 
-    public function getNumeroReference(): ?string
-    {
-        return $this->numeroReference;
-    }
+    // public function getNumeroReference(): ?string
+    // {
+    //     return $this->numeroReference;
+    // }
 
-    public function setNumeroReference(string $numeroReference): self
-    {
-        $this->numeroReference = $numeroReference;
+    // public function setNumeroReference(string $numeroReference): self
+    // {
+    //     $this->numeroReference = $numeroReference;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function isIsApprouve(): ?bool
     {

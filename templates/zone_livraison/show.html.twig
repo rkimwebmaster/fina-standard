@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ZoneLivraison{% endblock %}
+
+{% block body %}
+    <h1>ZoneLivraison</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ zone_livraison.id }}</td>
+            </tr>
+            <tr>
+                <th>Zone</th>
+                <td>{{ zone_livraison.zone }}</td>
+            </tr>
+            <tr>
+                <th>EstimationUn</th>
+                <td>{{ zone_livraison.estimationUn }}</td>
+            </tr>
+            <tr>
+                <th>EstimationDeux</th>
+                <td>{{ zone_livraison.estimationDeux }}</td>
+            </tr>
+            <tr>
+                <th>Prix</th>
+                <td>{{ zone_livraison.prix }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ zone_livraison.description }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_zone_livraison_index') }}">back to list</a>
+
+    <a href="{{ path('app_zone_livraison_edit', {'id': zone_livraison.id}) }}">edit</a>
+
+    {{ include('zone_livraison/_delete_form.html.twig') }}
+{% endblock %}

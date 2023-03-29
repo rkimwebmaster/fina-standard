@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ZoneLivraison index
+{% endblock %}
+
+{% block body %}
+	<table class="table table-hover table-stripped table-bordered ">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Zone</th>
+				<th>estimation délai</th>
+				<th>Prix</th>
+				<th>Description</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+        <tfoot>
+			<tr>
+				<th>#</th>
+				<th>Zone</th>
+				<th>estimation délai</th>
+				<th>Prix</th>
+				<th>Description</th>
+				<th>actions</th>
+			</tr>
+		</tfoot>
+		<tbody>
+			{% for zone_livraison in zone_livraisons %}
+				<tr>
+					<td>{{ loop.index }}</td>
+					<td>{{ zone_livraison.zone }}</td>
+					<td>
+						Entre
+						{{ zone_livraison.estimationUn }}
+						et
+						{{ zone_livraison.estimationDeux }}
+						jours
+					</td>
+					<td>{{ zone_livraison.prix }}</td>
+					<td>{{ zone_livraison.description }}</td>
+					<td>
+						<div class="btn-group">
+							<a class="btn btn-sm btn-primary" href="{{ path('app_zone_livraison_show', {'id': zone_livraison.id}) }}">détail</a>
+							{% if is_granted("ROLE_ADMIN") %}
+								<a class="btn btn-sm btn-secondary" href="{{ path('app_zone_livraison_edit', {'id': zone_livraison.id}) }}">modifier</a>
+							{% endif %}
+						</div>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="7">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

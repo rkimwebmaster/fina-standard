@@ -33,6 +33,54 @@ class AchatController extends AbstractController
         ]);
     }
 
+
+    #[Route('/achatReussi', name: 'app_achat_reussi', methods: ['GET'])]
+    public function achatReussi(AchatRepository $achatRepository): Response
+    {
+        return $this->render('accueil/page.html.twig', [
+            // 'page'=>$page,
+            'indice'=>'achatReussi',
+            'titre'=> 'Votre achat a réussi',
+
+        ]);
+    }
+
+    
+    #[Route('/achatAnnule', name: 'app_achat_annule', methods: ['GET'])]
+    public function achatAnnule(AchatRepository $achatRepository): Response
+    {
+        return $this->render('accueil/page.html.twig', [
+            // 'page'=>$page,
+            'indice'=>'achatAnnule',
+            'titre'=> 'Votre achat a été annulé',
+
+        ]);
+    }
+
+    
+    #[Route('/achatEchoue', name: 'app_achat_echoue', methods: ['GET'])]
+    public function achatEchoue(AchatRepository $achatRepository): Response
+    {
+        return $this->render('accueil/page.html.twig', [
+            // 'page'=>$page,
+            'indice'=>'achatEchoue',
+            'titre'=> 'Votre achat a échoué',
+
+        ]);
+    }
+
+    
+    #[Route('/achatNotify', name: 'app_achat_notify', methods: ['GET'])]
+    public function achatNotify(AchatRepository $achatRepository): Response
+    {
+        return $this->render('accueil/page.html.twig', [
+            // 'page'=>$page,
+            'indice'=>'achatNotify',
+            'titre'=> 'Notification des achats ',
+
+        ]);
+    }
+
     #[Route('/new', name: 'app_achat_new', methods: ['GET', 'POST'])]
     public function new(MailerInterface $mailer, SessionInterface $session,PageLivraisonRepository $pageLivraisonRepository, MobileMoneyRepository $mobileMoneyRepository, ClientRepository $clientRepository, ProduitRepository $produitRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -43,19 +91,15 @@ class AchatController extends AbstractController
             return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
 
         }
-        // ///verifier que le mobile money sont déja configuré 
-        // $mobileMoneys = $mobileMoneyRepository->findAll();
         
-        // if(sizeof($mobileMoneys)==0){
-        //     $this->addFlash('info','Contacter pour création des mobiles money....');
-        //     return $this->redirectToRoute('app_accueil', [], Response::HTTP_SEE_OTHER);
-        // }
         $conditions_livraison=$pageLivraisonRepository->findOneBy([],['createdAt'=>'desc']);
 
         $email=$user->getEmail();
-        $client=$clientRepository->findOneBy(['email'=>$email]);
+        $client=$user->getClient();
         $achat = new Achat($user);
-        // dd($achat->getMobileMoney());
+
+        $achat->setClient($client);
+        $achat->setZoneLivraisonPreferentielle($client->getZoneLivraisonPreferentielle());
         //ici on recupere la session et on initialise les données dans l'achat 
         $panier=$session->get('panier',[]);
         if($panier==null){
@@ -63,6 +107,7 @@ class AchatController extends AbstractController
         }
         $dataPanier=[];
         $total=0;
+        $fraisLivraison=$this->getUser()->getClient()->getZoneLivraisonPreferentielle()->getPrix();
         foreach($panier as $id=>$quantite){
             $produit=$produitRepository->find($id);
             if($produit){
@@ -81,12 +126,11 @@ class AchatController extends AbstractController
         }
         ///initialiser l objet achat 
         $achat->setPrixTotal($total);
+        // ////
+        // $form = $this->createForm(AchatType::class, $achat);
+        // $form->handleRequest($request);
 
-        ////
-        $form = $this->createForm(AchatType::class, $achat);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
+        // if ($form->isSubmitted() && $form->isValid()) {
             
             $entityManager->persist($achat);
             $entityManager->flush();
@@ -100,17 +144,16 @@ class AchatController extends AbstractController
             try{
                 $mailer->send($mail);
             }catch(TransportException $e){
-                $this->addFlash("danger","Une erreur s'est produite.");
+                $this->addFlash("danger","Une erreur de mail s'est produite.");
             }
-            return $this->redirectToRoute('app_achat_index', [], Response::HTTP_SEE_OTHER);
-        }
+            return $this->redirectToRoute('app_achat_show', ['id'=>$achat->getId()], Response::HTTP_SEE_OTHER);
+        // }
 
         return $this->renderForm('achat/new.html.twig', [
             // 'mobileMoneys' => $mobileMoneys,
             'total' => $total,
             'dataPanier' => $dataPanier,
             'achat' => $achat,
-            'form' => $form,
             'conditions_livraison' => $conditions_livraison,
             
         ]);

@@ -30,7 +30,15 @@ class PanierController extends AbstractController
         $dataPanier=[];
         $prixTotalPanier=0;
         $quantiteProduits=0;
-        foreach($panier as $id=>$quantite){
+        $user=$this->getUser();
+        if($user){
+            $fraisLivraison=$user->getClient()->getZoneLivraisonPreferentielle()->getPrix();
+        }else{
+            
+            $this->addFlash("success", "Vous n'avez pas le profile client");
+            $fraisLivraison=0;
+            return $this->redirectToRoute('app_accueil', [], Response::HTTP_SEE_OTHER);
+        }        foreach($panier as $id=>$quantite){
             $produit=$produitRepository->find($id);
             if($produit){
                 $dataPanier[]=[
@@ -43,10 +51,14 @@ class PanierController extends AbstractController
             }
         }
         
+
+        // dd($prixTotalPanier + $fraisLivraison);
         return $this->render('panier/index.html.twig', [
             "dataPanier"=>$dataPanier,
             "total"=>$prixTotalPanier,
+            "grandTotal"=>$prixTotalPanier + $fraisLivraison,
             "quantiteProduits"=>$quantiteProduits,
+            "fraisLivraison"=>$fraisLivraison,
         ]);
     }
 
@@ -57,11 +69,20 @@ class PanierController extends AbstractController
      */
     public function panierFlottant(SessionInterface $session, ProduitRepository $produitRepository): Response
     {
-
         $panier=$session->get('panier',[]);
         $dataPanier=[];
         $prixTotalPanier=0;
         $quantiteProduits=0;
+
+        $user=$this->getUser();
+        if($user){
+            $fraisLivraison=$user->getClient()->getZoneLivraisonPreferentielle()->getPrix();
+        }else{
+            
+            $this->addFlash("success", "Vous n'avez pas le profile client");
+            $fraisLivraison=0;            
+        }
+        
         foreach($panier as $id=>$quantite){
             $produit=$produitRepository->find($id);
             if($produit){
@@ -69,7 +90,7 @@ class PanierController extends AbstractController
                     'produit'=>$produit,
                     'quantite'=>$quantite,
                 ];
-                $prixTotalPanier +=$produit->getPrixVente() * $quantite;
+                $prixTotalPanier +=$produit->getPrixVente() * $quantite + $fraisLivraison;
                 $quantiteProduits +=$quantite;
     
             }
@@ -77,8 +98,10 @@ class PanierController extends AbstractController
         
         return $this->render('_partials/_panier_flottant.html.twig', [
             "dataPanier"=>$dataPanier,
-            "total"=>$prixTotalPanier,
+            "total"=>$prixTotalPanier ,
+            "grandTotal"=>$prixTotalPanier + $fraisLivraison,
             "quantiteProduits"=>$quantiteProduits,
+            "fraisLivraison"=>$fraisLivraison,
         ]);
     }
 
