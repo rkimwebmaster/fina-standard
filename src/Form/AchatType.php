@@ -15,8 +15,8 @@ class AchatType extends AbstractType
             // ->add('dateAchat')
             // ->add('dateLivraison')
             // ->add('prixTotal')
-            ->add('mobileMoney', null, [
-                'help'=>'Faites le transfert au numéro indiquez ci-dessus et recuperer le code de confirmation',
+            ->add('zoneLivraisonPreferentielle', null, [
+                'help'=>'Choisissez la zone la plus proche de votre Location (adresse indiquée)',
             ])
             ->add('numeroReference',null,[
                 'help'=>'Veuillez entrer le code reference (Transaction ID) que votre opérateur mobile vous a envoyer',

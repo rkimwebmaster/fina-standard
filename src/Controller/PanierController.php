@@ -20,6 +20,11 @@ class PanierController extends AbstractController
      */
     public function index(SessionInterface $session, ProduitRepository $produitRepository): Response
     {
+        if($this->getUser()->getClient()===null){
+            $this->addFlash("warning", "Vous devriez créez un compte client. Vous n'êtes pas autorisé(e) à accedez au panier. Seuls les clients.");
+            return $this->redirectToRoute('app_register', [], Response::HTTP_SEE_OTHER);
+
+        }
 
         $panier=$session->get('panier',[]);
         $dataPanier=[];

@@ -49,11 +49,19 @@ class Client
     #[ORM\OneToOne(mappedBy: 'client', cascade: ['persist', 'remove'])]
     private ?User $utilisateur = null;
 
+    
+    public function __construct()
+    {
+        $this->codeClient=strtoupper(uniqid('FCL-'));
+        $this->createdAt=new \DateTimeImmutable();
+        $this->achats = new ArrayCollection();
+    }
+
 
     #[ORM\PrePersist]
     #[ORM\PreUpdate]
     public function misAJour(){
-        // $this->email=$this->getAdresse()->getEmail();
+        $this->codeClient=uniqid('FCL-');
     }
     
     public function getCreatedAt(): ?\DateTimeImmutable
@@ -78,15 +86,6 @@ class Client
         $this->updatedAt = $updatedAt;
 
         return $this;
-    }
-
-    public function __construct()
-    {
-        $this->codeClient=strtoupper(uniqid('CL-'));
-        $this->createdAt=new \DateTimeImmutable();
-        $this->achats = new ArrayCollection();
-        
-
     }
 
     public function getId(): ?int

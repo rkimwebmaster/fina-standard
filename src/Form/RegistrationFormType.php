@@ -19,7 +19,8 @@ class RegistrationFormType extends AbstractType
     {
         $builder
         ->add('email')
-        ->add('zoneLivraisonPreferentielle')
+        // ->add('zoneLivraisonPreferentielle')
+        ->add('client', ClientType::class)
         ->add('agreeTerms', CheckboxType::class, [
             'label' => "Accepter nos condtions d'inscription.",
             'mapped' => false,
@@ -37,8 +38,8 @@ class RegistrationFormType extends AbstractType
                 'first_options'  => ['label' => 'Mot de passe '],
                 'second_options' => ['label' => 'Répeter le mot de passe'],
             ])
-            ->add('identite', IdentiteType::class)
-            ->add('adresse', AdresseType::class)
+            // ->add('identite', IdentiteType::class)
+            // ->add('adresse', AdresseType::class)
         ;
     }
 

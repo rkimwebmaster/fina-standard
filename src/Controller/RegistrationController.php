@@ -19,6 +19,25 @@ class RegistrationController extends AbstractController
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, IceAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
+        $user=$this->getUser();
+        if ($user) {
+            if(! $user->getClient()){
+
+                if(!$this->denyAccessUnlessGranted("ROLE_ADMIN")){
+                    $this->addFlash(
+                        'info',
+                        'Vous êtes déjà connécté(e) en tant que adminsitrateur, prière de créez un compte client afin de procedez au achats. !'
+                    );
+                    return $this->redirectToRoute('app_client_new');
+                }
+            }
+
+            $this->addFlash(
+                'info',
+                'Vous êtes déjà connécté(e) avec un profile client !'
+            );
+            return $this->redirectToRoute('app_accueil');
+        }
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);

@@ -65,11 +65,15 @@ class Achat
 
     #[ORM\ManyToOne(inversedBy: 'achats')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Client $client = null;  
+    private ?Client $client = null;
+
+    #[ORM\ManyToOne(inversedBy: 'achats')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?ZoneLivraison $zoneLivraisonPreferentielle = null;  
 
     public function getCodeClient(){
         if($this->getUser()){
-            return $this->getUser()->getCodeClient();
+            return $this->getClient()->getCodeClient();
         }else{
             return "Aucun client";
         }
@@ -316,6 +320,18 @@ class Achat
     public function setClient(?Client $client): self
     {
         $this->client = $client;
+
+        return $this;
+    }
+
+    public function getZoneLivraisonPreferentielle(): ?ZoneLivraison
+    {
+        return $this->zoneLivraisonPreferentielle;
+    }
+
+    public function setZoneLivraisonPreferentielle(?ZoneLivraison $zoneLivraisonPreferentielle): self
+    {
+        $this->zoneLivraisonPreferentielle = $zoneLivraisonPreferentielle;
 
         return $this;
     }

@@ -12,6 +12,8 @@
                 <th>CodeClient</th>
                 <th>CreatedAt</th>
                 <th>UpdatedAt</th>
+                <th>Email</th>
+                <th>Password</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -22,6 +24,8 @@
                 <td>{{ client.codeClient }}</td>
                 <td>{{ client.createdAt ? client.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ client.updatedAt ? client.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ client.email }}</td>
+                <td>{{ client.password }}</td>
                 <td>
                     <a href="{{ path('app_client_show', {'id': client.id}) }}">show</a>
                     <a href="{{ path('app_client_edit', {'id': client.id}) }}">edit</a>
@@ -29,7 +33,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="7">no records found</td>
             </tr>
         {% endfor %}
         </tbody>

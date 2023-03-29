@@ -99,6 +99,11 @@ class UserController extends AbstractController
 
             $userRepository->save($user, true);
 
+            $this->addFlash(
+                'success',
+                'Le changement a été bien considéré.'
+            );
+
             return $this->redirectToRoute('app_user_show', ['id'=> $user->getId()], Response::HTTP_SEE_OTHER);
         }
 
@@ -111,6 +116,10 @@ class UserController extends AbstractController
     public function delete(Request $request, User $user, UserRepository $userRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+            $this->addFlash(
+                'success',
+                'Your changes were saved!'
+            );
             $userRepository->remove($user, true);
         }
 

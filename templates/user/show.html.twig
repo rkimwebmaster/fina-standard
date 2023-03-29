@@ -13,11 +13,11 @@
                 <th>Rôle principal</th>
                 <td>{{ user.rolePrincipal }}</td>
             </tr>
+            {% if user.client.id is defined %}
             <tr>
                 <th>Code client </th>
-                <td>{{ user.codeClient }}</td>
+                <td>{{ user.client.codeClient }}</td>
             </tr>
-
             <tr>
                 <th>Noms complets  </th>
                 <td>{{ user.identite }}</td>
@@ -26,6 +26,7 @@
                 <th>Adresse </th>
                 <td>{{ user.adresse }}</td>
             </tr>
+        {% endif %}
         </tbody>
     </table>
     {% if is_granted("ROLE_ADMIN") %}

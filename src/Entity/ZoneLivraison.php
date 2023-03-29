@@ -7,8 +7,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: ZoneLivraisonRepository::class)]
+#[UniqueEntity(fields: ['zone'], message: 'Cette zone est déjà créée')]
 class ZoneLivraison
 {
     #[ORM\Id]
@@ -16,7 +18,7 @@ class ZoneLivraison
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique:true)]
     private ?string $zone = null;
 
     #[ORM\Column]
@@ -37,6 +39,9 @@ class ZoneLivraison
     #[ORM\OneToMany(mappedBy: 'zoneLivraisonPreferentielle', targetEntity: Client::class)]
     private Collection $clients;
 
+    #[ORM\OneToMany(mappedBy: 'zoneLivraisonPreferentielle', targetEntity: Achat::class)]
+    private Collection $achats;
+
     public function __toString()
     {
         return $this->zone."-> Coût : ".$this->prix;
@@ -46,6 +51,7 @@ class ZoneLivraison
     {
         $this->users = new ArrayCollection();
         $this->clients = new ArrayCollection();
+        $this->achats = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -121,28 +127,7 @@ class ZoneLivraison
         return $this->users;
     }
 
-    public function addUser(User $user): self
-    {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
-            $user->setZoneLivraisonPreferentielle($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): self
-    {
-        if ($this->users->removeElement($user)) {
-            // set the owning side to null (unless already changed)
-            if ($user->getZoneLivraisonPreferentielle() === $this) {
-                $user->setZoneLivraisonPreferentielle(null);
-            }
-        }
-
-        return $this;
-    }
-
+   
     /**
      * @return Collection<int, Client>
      */
@@ -167,6 +152,36 @@ class ZoneLivraison
             // set the owning side to null (unless already changed)
             if ($client->getZoneLivraisonPreferentielle() === $this) {
                 $client->setZoneLivraisonPreferentielle(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Achat>
+     */
+    public function getAchats(): Collection
+    {
+        return $this->achats;
+    }
+
+    public function addAchat(Achat $achat): self
+    {
+        if (!$this->achats->contains($achat)) {
+            $this->achats->add($achat);
+            $achat->setZoneLivraisonPreferentielle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAchat(Achat $achat): self
+    {
+        if ($this->achats->removeElement($achat)) {
+            // set the owning side to null (unless already changed)
+            if ($achat->getZoneLivraisonPreferentielle() === $this) {
+                $achat->setZoneLivraisonPreferentielle(null);
             }
         }
 
