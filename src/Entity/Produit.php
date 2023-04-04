@@ -33,7 +33,7 @@ class Produit
     private ?float $prixVente = 0;
 
     #[ORM\Column]
-    private ?int $qteStock = 10;
+    private ?int $qteStock = 0;
 
     #[ORM\Column]
     private ?int $qteAlerte = 10;
@@ -72,14 +72,17 @@ class Produit
     #[ORM\JoinColumn(nullable: false)]
     private ?Categorie $categorie = null;
 
-    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: ZoneProduit::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: ZoneProduit::class, orphanRemoval: true, cascade:["persist","remove"])]
     private Collection $zoneProduits;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $isEnStock = true;
 
     #[ORM\PrePersist()]
     #[ORM\PreUpdate()]
     public function creationEtMiseAJour()
     {
-        $this->setPrixVente($this->prixVente/100);
+        $this->setPrixVente($this->prixVente/10);
     }
 
     
@@ -136,7 +139,7 @@ class Produit
 
     public function setNom(string $nom): self
     {
-        $this->nom = $nom;
+        $this->nom = strtoupper($nom);
 
         return $this;
     }
@@ -386,6 +389,18 @@ class Produit
                 $zoneProduit->setProduit(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isIsEnStock(): ?bool
+    {
+        return $this->isEnStock;
+    }
+
+    public function setIsEnStock(?bool $isEnStock): self
+    {
+        $this->isEnStock = $isEnStock;
 
         return $this;
     }

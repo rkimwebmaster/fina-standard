@@ -23,7 +23,7 @@ class CategorieCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('designation')->setColumns(6),
-            ImageField::new('photo1170x500')->setBasePath('uploads/images/produits/')->setUploadDir('public/uploads/images/produits/')->setColumns(6),
+            ImageField::new('photo1170x500')->setBasePath('uploads/images/')->setUploadDir('public/uploads/images/')->setColumns(6)->setLabel("Image au fomat 1170 x 500 ")->setHelp("Le poids le plus léger possible, plus ou moins de  50 Ko"),
             TextEditorField::new('description')->setColumns(12),
             DateTimeField::new('createdAt')->hideOnForm(),
             DateTimeField::new('updatedAt')->hideOnForm(),

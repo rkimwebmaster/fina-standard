@@ -8,6 +8,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: ZoneLivraisonRepository::class)]
 #[UniqueEntity(fields: ['zone'], message: 'Cette zone est déjà créée')]
@@ -22,6 +24,7 @@ class ZoneLivraison
     private ?string $zone = null;
 
     #[ORM\Column]
+    #[Assert\LessThanOrEqual(propertyPath:"estimationDeux", message:"Cette valeur doit être inférieur à {{ compared_value }}")]
     private ?int $estimationUn = null;
 
     #[ORM\Column]

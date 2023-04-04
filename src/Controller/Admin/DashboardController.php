@@ -32,9 +32,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class DashboardController extends AbstractDashboardController
 {
 
-    public function __construct(private AdminURLGenerator $adminURL)
+    public function __construct(
+        private AdminURLGenerator $adminURL,
+        // private ChartBuilderInterface $chartBuilder,
+        )
     {
     }
+
     #[Route('/admin', name: 'app_admin')]
     public function index(): Response
     {
@@ -125,7 +129,7 @@ class DashboardController extends AbstractDashboardController
                 MenuItem::linkToCrud('Nouveau ADMIN ', 'fa fa-plus-circle', User::class)->setAction(Crud::PAGE_NEW),
 
             ]),
-            MenuItem::section('Métiers', 'fa fa-search-plus'),
+            MenuItem::section('Métiers', 'fa fa-bank'),
             // MenuItem::subMenu('Liste des éléments ')->setSubItems([
             MenuItem::linkToCrud('Achats', 'fa fa-list-ul', Achat::class),
             MenuItem::linkToCrud('Zone de produit', 'fa fa-list-ul', ZoneProduit::class),
