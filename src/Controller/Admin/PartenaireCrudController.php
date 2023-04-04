@@ -21,9 +21,9 @@ class PartenaireCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('nom'),
-            ImageField::new('logo215x140')->setBasePath('uploads/images/partenaires/')->setUploadDir('public/uploads/images/partenaires/'),
-            TextEditorField::new('description'),
+            TextField::new('nom')->setColumns(6)->setLabel("Nom du partenaire"),
+            ImageField::new('logo215x140')->setBasePath('uploads/images/partenaires/')->setUploadDir('public/uploads/images/partenaires/')->setColumns(6)->setLabel("Image à la dimension 215x140")->setHelp("Le plus léger possible (moins de 50 ko)"),
+            TextEditorField::new('description')->setColumns(12)->setLabel("Texte descriptif du partenaire"),
         ];
     }
     

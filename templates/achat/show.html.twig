@@ -4,7 +4,7 @@
 
 {% block body %}
 
-<form action="https://api.maxicashapp.com/PayEntryPost" method="POST" target="_blank" >
+<form action="https://api-testbed.maxicashapp.com/PayEntryPost" method="POST" target="_blank" >
     <input type="hidden" name="PayType" value="MaxiCash">
     <input type="hidden" name="Amount" value="{{achat.prixTotal}}">
     <input type="hidden" name="Currency" value="MaxiDollar">
@@ -30,11 +30,15 @@
         <tbody>
             <tr>
                 <th>Date Achat</th>
-                <td>{{ achat.dateAchat ? achat.dateAchat|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ achat.dateAchat ? achat.dateAchat|format_date('long') : '' }}</td>
             </tr>
             <tr>
-                <th>Date Livraison</th>
-                <td>{{ achat.dateLivraison ? achat.dateLivraison|date('Y-m-d H:i:s') : '' }}</td>
+                <th>Période probable de Livraison</th>
+                <td> Entre {{ achat.zoneLivraisonPreferentielle.estimationUn }} et {{ achat.zoneLivraisonPreferentielle.estimationUn }} jours. </td>
+            </tr>
+            <tr>
+                <th>Frais expeditions</th>
+                <td> USD {{ achat.fraisExpedition }}</td>
             </tr>
             <tr>
                 <th>Prix Total</th>
@@ -47,7 +51,7 @@
         </tbody>
     </table>
 
-    <a class="btn btn-success" href="{{ path('app_achat_index') }}">Voir tout mes achats</a>
+    {# <a class="btn btn-success" href="{{ path('app_achat_index') }}">Voir tout mes achats</a> #}
 
     {# {{ include('achat/_delete_form.html.twig') }} #}
 

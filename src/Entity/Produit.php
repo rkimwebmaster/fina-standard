@@ -72,6 +72,9 @@ class Produit
     #[ORM\JoinColumn(nullable: false)]
     private ?Categorie $categorie = null;
 
+    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: ZoneProduit::class, orphanRemoval: true)]
+    private Collection $zoneProduits;
+
     #[ORM\PrePersist()]
     #[ORM\PreUpdate()]
     public function creationEtMiseAJour()
@@ -118,6 +121,7 @@ class Produit
         $this->isSolde=false;
         $this->isBestSelling=false;
         $this->createdAt=new \DateTimeImmutable();
+        $this->zoneProduits = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -352,6 +356,36 @@ class Produit
     public function setPhoto624x800Deuxieme(?string $photo624x800Deuxieme): self
     {
         $this->photo624x800Deuxieme = $photo624x800Deuxieme;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ZoneProduit>
+     */
+    public function getZoneProduits(): Collection
+    {
+        return $this->zoneProduits;
+    }
+
+    public function addZoneProduit(ZoneProduit $zoneProduit): self
+    {
+        if (!$this->zoneProduits->contains($zoneProduit)) {
+            $this->zoneProduits->add($zoneProduit);
+            $zoneProduit->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeZoneProduit(ZoneProduit $zoneProduit): self
+    {
+        if ($this->zoneProduits->removeElement($zoneProduit)) {
+            // set the owning side to null (unless already changed)
+            if ($zoneProduit->getProduit() === $this) {
+                $zoneProduit->setProduit(null);
+            }
+        }
 
         return $this;
     }

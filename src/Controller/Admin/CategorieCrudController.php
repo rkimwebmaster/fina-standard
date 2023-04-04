@@ -22,9 +22,9 @@ class CategorieCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('designation'),
-            ImageField::new('photo1170x500')->setBasePath('uploads/images/produits/')->setUploadDir('public/uploads/images/produits/'),
-            TextEditorField::new('description'),
+            TextField::new('designation')->setColumns(6),
+            ImageField::new('photo1170x500')->setBasePath('uploads/images/produits/')->setUploadDir('public/uploads/images/produits/')->setColumns(6),
+            TextEditorField::new('description')->setColumns(12),
             DateTimeField::new('createdAt')->hideOnForm(),
             DateTimeField::new('updatedAt')->hideOnForm(),
         ];

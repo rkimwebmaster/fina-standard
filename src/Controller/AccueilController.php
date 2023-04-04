@@ -48,9 +48,16 @@ class AccueilController extends AbstractController
             $userRepository->save($user, true);
             $security->login($user);
             $this->addFlash('info','Ceci est un compte admin par défaut, prière de changer le mot de passe.... Urgemment');
-            $this->addFlash('info','Vous devez configurer l\'application completement afin de le rendre utilisable ');
-            $this->addFlash('info','Créez les infos de l\'entreprise et toutes autres parametres utiles, Urgemment....');         
+            $this->addFlash('info','Vous devez configurer l\'application completement afin de la rendre utilisable ');
+            $this->addFlash('info','Créez les infos de l\'entreprise et tous autres parametres utiles, Urgemment....');         
 
+        }elseif($checkUser){
+            if($checkUser->getEmail()=="admin@ice.cd"){
+                $security->login($checkUser);
+            $this->addFlash('info','Ceci est un compte admin par défaut, Soyez sûr d\'avoir changé le mot de passe.... Urgemment');
+            $this->addFlash('info','Vous devez configurer l\'application completement afin de la rendre utilisable ');
+            $this->addFlash('info','Créez les infos de l\'entreprise et tous autres parametres utiles, Urgemment....');         
+            }
         }
 
         return $this->render('accueil/index.html.twig', [

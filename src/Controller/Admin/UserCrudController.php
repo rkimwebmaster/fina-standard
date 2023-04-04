@@ -32,8 +32,8 @@ class UserCrudController extends AbstractCrudController
             ->setFormType(RepeatedType::class)
             ->setFormTypeOptions([
                 'type' => PasswordType::class,
-                'first_options' => ['label' => 'Password'],
-                'second_options' => ['label' => '(Repeat)'],
+                'first_options' => ['label' => 'Mot de passe '],
+                'second_options' => ['label' => '(Répéter le mot de passe)'],
                 // 'mapped' => false,
             ])
             ->setRequired($pageName === Crud::PAGE_NEW)

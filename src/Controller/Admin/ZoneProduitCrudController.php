@@ -2,17 +2,19 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\ZoneLivraison;
+use App\Entity\ZoneProduit;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-class ZoneLivraisonCrudController extends AbstractCrudController
+class ZoneProduitCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return ZoneLivraison::class;
+        return ZoneProduit::class;
     }
 
     
@@ -20,11 +22,10 @@ class ZoneLivraisonCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('zone')->setColumns(6),
-            TextField::new('estimationUn')->setColumns(3),
-            TextField::new('estimationDeux')->setColumns(3),
-            TextEditorField::new('description')->setColumns(12),
+            AssociationField::new('produit')->setColumns(4),
+            AssociationField::new('zoneLivraison')->setColumns(4),
+            MoneyField::new('montant')->setCurrency("USD")->setColumns(4),
         ];
     }
-
+    
 }

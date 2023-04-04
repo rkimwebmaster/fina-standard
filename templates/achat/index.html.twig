@@ -11,6 +11,7 @@
 								<th>#</th>
 								<th>Date Achat</th>
 								<th>Prix Total</th>
+								<th>Frais expeditions</th>
 								<th>Numéro Reference</th>
 								<th>Etat</th>
 								<th>Facture</th>
@@ -21,6 +22,7 @@
 								<th>#</th>
 								<th>Date Achat</th>
 								<th>Prix Total</th>
+								<th>Frais expeditions</th>
 								<th>Numéro Reference</th>
 								<th>Etat</th>
 								<th>Facture</th>
@@ -30,9 +32,9 @@
 							{% for achat in achats %}
 								<tr>
 									<td>{{ loop.index }}</td>
-									<td>{{ achat.dateAchat ? achat.dateAchat|date('Y-m-d H:i:s') : '' }}</td>
-									<td>{{ achat.prixTotal / 100 }}</td>
-									<td>{{ achat.numeroReference }}</td>
+									<td>{{ achat.dateAchat ? achat.dateAchat|format_date('long') : '' }}</td>
+									<td>{{ achat.prixTotal }}</td>
+									<td>{{ achat.id }}</td>
 									<td><span class="badge badge-info">{{ achat.etat }} </span></td>
 									<td>
 										<a class="btn btn-sm btn-default" href="{{ path('app_achat_show', {'id': achat.id}) }}"><span class="fa fa-search-plus"></span></a>

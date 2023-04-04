@@ -1,4 +1,4 @@
-  {{ include ("_partials/_haut.html.twig") }}
+{{ include ("_partials/_haut.html.twig") }}
 
   <!-- =====  BANNER STRAT  ===== -->
 {# <div class="banner">
@@ -95,5 +95,31 @@
   <!-- Single Blog  -->
   <!-- End Blog   -->
   <!-- =====  CONTAINER END  ===== -->
+
+  {% if partenaires is defined and partenaires| length > 0 %}
+	<div class="container">
+		<div class="row">
+			<div id="brand_carouse" class="ptb_30 text-center">
+				<div class="type-01">
+					<div class="heading-part mb_20 ">
+						<h2 class="main_title">Nos Partenaires
+						</h2>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="brand owl-carousel ptb_20">
+								{% for partenaire in partenaires %}
+									<div class="item text-center">
+										<a href="#"><img src="{{asset('uploads/images/partenaires/' ~ partenaire.logo)}}" alt="{{partenaire.nom}}" title="{{partenaire.nom}}" class="img-responsive"/></a>
+									</div>
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endif %}
 
   {% include("_partials/_bas.html.twig") %}

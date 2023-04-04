@@ -27,9 +27,6 @@ class ZoneLivraison
     #[ORM\Column]
     private ?int $estimationDeux = null;
 
-    #[ORM\Column]
-    private ?float $prix = null;
-
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
@@ -42,9 +39,12 @@ class ZoneLivraison
     #[ORM\OneToMany(mappedBy: 'zoneLivraisonPreferentielle', targetEntity: Achat::class)]
     private Collection $achats;
 
+    #[ORM\OneToMany(mappedBy: 'zoneLivraison', targetEntity: ZoneProduit::class)]
+    private Collection $zoneProduits;
+
     public function __toString()
     {
-        return $this->zone."-> Coût : ".$this->prix;
+        return $this->zone." livré dans ( ".$this->estimationUn." ou ".$this->estimationDeux ." jours).";
     }
 
     public function __construct()
@@ -52,6 +52,7 @@ class ZoneLivraison
         $this->users = new ArrayCollection();
         $this->clients = new ArrayCollection();
         $this->achats = new ArrayCollection();
+        $this->zoneProduits = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -91,18 +92,6 @@ class ZoneLivraison
     public function setEstimationDeux(int $estimationDeux): self
     {
         $this->estimationDeux = $estimationDeux;
-
-        return $this;
-    }
-
-    public function getPrix(): ?float
-    {
-        return $this->prix;
-    }
-
-    public function setPrix(float $prix): self
-    {
-        $this->prix = $prix;
 
         return $this;
     }
@@ -182,6 +171,36 @@ class ZoneLivraison
             // set the owning side to null (unless already changed)
             if ($achat->getZoneLivraisonPreferentielle() === $this) {
                 $achat->setZoneLivraisonPreferentielle(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ZoneProduit>
+     */
+    public function getZoneProduits(): Collection
+    {
+        return $this->zoneProduits;
+    }
+
+    public function addZoneProduit(ZoneProduit $zoneProduit): self
+    {
+        if (!$this->zoneProduits->contains($zoneProduit)) {
+            $this->zoneProduits->add($zoneProduit);
+            $zoneProduit->setZoneLivraison($this);
+        }
+
+        return $this;
+    }
+
+    public function removeZoneProduit(ZoneProduit $zoneProduit): self
+    {
+        if ($this->zoneProduits->removeElement($zoneProduit)) {
+            // set the owning side to null (unless already changed)
+            if ($zoneProduit->getZoneLivraison() === $this) {
+                $zoneProduit->setZoneLivraison(null);
             }
         }
 

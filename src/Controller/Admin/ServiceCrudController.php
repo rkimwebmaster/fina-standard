@@ -21,9 +21,9 @@ class ServiceCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('designation'),
-            ImageField::new('photo1170x500')->setBasePath('uploads/images/produits/')->setUploadDir('public/uploads/images/produits/'),
-            TextEditorField::new('description'),
+            TextField::new('designation')->setColumns(6)->setLabel("Nom du service "),
+            ImageField::new('photo1170x500')->setBasePath('uploads/images/produits/')->setUploadDir('public/uploads/images/produits/')->setColumns(6)->setLabel("Image de la page du service ")->setHelp("Avec une taille 1170 x 500 et le plus léger possible"),
+            TextEditorField::new('description')->setColumns(12),
         ];
     }
     

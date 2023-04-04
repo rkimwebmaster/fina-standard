@@ -27,28 +27,22 @@ class ProduitCrudController extends AbstractCrudController
     
     public function configureFields(string $pageName): iterable
     {
-        return [
-            // FormField::addTab('Descriptions'),
-            IdField::new('id')->hideOnForm(),
-            TextField::new('nom'),
-            AssociationField::new('categorie'),
-            MoneyField::new('prixVente')->setCurrency("USD"),
-            BooleanField::new('isArrivage')->onlyOnForms(),
-            TextField::new('code')->hideOnForm(),
-            // FormField::addTab('Stock'),
-            // IntegerField::new('qteStock'),
-            // IntegerField::new('qteAlerte')->hideOnIndex(),
-            // FormField::addTab('Caracteristiques'),
-            ColorField::new('couleur')->hideOnIndex(),
-            ImageField::new('photo624x800Premier')->setBasePath('uploads/images/produits/')->setUploadDir('public/uploads/images/produits/'),
-            ImageField::new('photo624x800Deuxieme')->setBasePath('uploads/images/produits/')->setUploadDir('public/uploads/images/produits/')->hideOnIndex(),
-            CollectionField::new('photos')->useEntryCrudForm(PhotoCrudController::class)->hideOnIndex(),
-            // yield CollectionField::new('...')->useEntryCrudForm(CategoryCrudController::class);
 
-            // ImageField::new('photos')->setBasePath("uploads/images/produits/")->setUploadDir("public/uploads/images/produits/"),
-            // ImageField::new('image')->setBasePath('assets/images/')->setUploadDir('public/assets/images/'),
-            UrlField::new('urlVideoYoutube')->hideOnIndex(),
-            TextEditorField::new('description')->hideOnIndex(),
+        return [
+            IdField::new('id')->hideOnForm(),
+            TextField::new('nom')->setColumns(4),
+            AssociationField::new('categorie')->setColumns(4),
+            MoneyField::new('prixVente')->setCurrency("USD")->setColumns(4),
+            TextField::new('code')->hideOnForm(),
+            ImageField::new('photo624x800Premier')->setBasePath('uploads/images/produits/')->setUploadDir('public/uploads/images/produits/')->setColumns(4),
+            ImageField::new('photo624x800Deuxieme')->setBasePath('uploads/images/produits/')->setUploadDir('public/uploads/images/produits/')->hideOnIndex()->setColumns(4),
+            UrlField::new('urlVideoYoutube')->hideOnIndex()->setColumns(4),
+            TextEditorField::new('description')->hideOnIndex()->setColumns(12),
+            BooleanField::new('isArrivage')->onlyOnForms()->setColumns(12),
+            ColorField::new('couleur')->hideOnIndex()->setColumns(12),
+            CollectionField::new('photos')->useEntryCrudForm(PhotoCrudController::class)->hideOnIndex()->setColumns(12),
+
+
         ];
     }
     

@@ -21,8 +21,8 @@ class PagePolicyCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            ImageField::new('photo1170x500')->setBasePath('uploads/images/produits/')->setUploadDir('public/uploads/images/produits/'),
-            TextEditorField::new('contenu'),
+            ImageField::new('photo1170x500')->setBasePath('uploads/images/produits/')->setUploadDir('public/uploads/images/produits/')->setColumns(12)->setLabel("Image au fomat 1170 x 500 ")->setHelp("Le poids le plus léger possible, moins de 50 Ko"),
+            TextEditorField::new('contenu')->setColumns(12),
             DateTimeField::new('createdAt')->hideOnForm(),
             DateTimeField::new('updatedAt')->hideOnForm(),
         ];

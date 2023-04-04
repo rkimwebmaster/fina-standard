@@ -20,16 +20,16 @@ class TeamMemberCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('noms'),
-            TextField::new('fonction'),
-            TextField::new('description'),
-            ImageField::new('photoCouleur390x390')->setBasePath('uploads/images/team/')->setUploadDir('public/uploads/images/team/'),
-            ImageField::new('photoNoirBlanc390x390')->setBasePath('uploads/images/team/')->setUploadDir('public/uploads/images/team/'),
-            TextField::new('facebook'),
-            TextField::new('twitter'),
-            TextField::new('dribble'),
-            TextField::new('pinterest'),
-            TextField::new('behance'),
+            TextField::new('noms')->setColumns(4)->setLabel("Nom complet du teamMember")->setHelp("ex: Idris Kasongo Banza"),
+            TextField::new('fonction')->setColumns(4),
+            TextField::new('description')->setColumns(4)->setLabel("Description "),
+            ImageField::new('photoCouleur390x390')->setBasePath('uploads/images/')->setUploadDir('public/uploads/images/')->setColumns(6)->setLabel("Image à la dimension 390 x 390 ")->setHelp("Le plus léger possible (moins de 50 ko)"),
+            ImageField::new('photoNoirBlanc390x390')->setBasePath('uploads/images/')->setUploadDir('public/uploads/images/')->setColumns(6)->setLabel("Image à la dimension 390 x 390 ")->setHelp("Le plus léger possible (moins de 50 ko)"),
+            TextField::new('facebook')->setColumns(3),
+            TextField::new('twitter')->setColumns(3),
+            TextField::new('dribble')->setColumns(3),
+            TextField::new('pinterest')->setColumns(3),
+            // TextField::new('behance'),
         ];
     }
     
