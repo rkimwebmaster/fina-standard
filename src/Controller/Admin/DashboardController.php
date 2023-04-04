@@ -84,11 +84,11 @@ class DashboardController extends AbstractDashboardController
                 MenuItem::linkToCrud('Nouveau', 'fa fa-plus-circle', Produit::class)->setAction(Crud::PAGE_NEW),
 
             ]),
-            MenuItem::subMenu('Zone produit')->setSubItems([
-                MenuItem::linkToCrud('Liste ', 'fa fa-list-ul', ZoneProduit::class)->setAction(Crud::PAGE_INDEX),
-                MenuItem::linkToCrud('Nouveau', 'fa fa-plus-circle', ZoneProduit::class)->setAction(Crud::PAGE_NEW),
+            // MenuItem::subMenu('Zone produit')->setSubItems([
+            //     MenuItem::linkToCrud('Liste ', 'fa fa-list-ul', ZoneProduit::class)->setAction(Crud::PAGE_INDEX),
+            //     MenuItem::linkToCrud('Nouveau', 'fa fa-plus-circle', ZoneProduit::class)->setAction(Crud::PAGE_NEW),
 
-            ]),
+            // ]),
             MenuItem::subMenu('Page Qui Sommes-nous')->setSubItems([
                 MenuItem::linkToCrud('Liste ', 'fa fa-list-ul', PageQSN::class)->setAction(Crud::PAGE_INDEX),
                 MenuItem::linkToCrud('Nouveau', 'fa fa-plus-circle', PageQSN::class)->setAction(Crud::PAGE_NEW),
@@ -128,7 +128,8 @@ class DashboardController extends AbstractDashboardController
             MenuItem::section('Métiers', 'fa fa-search-plus'),
             // MenuItem::subMenu('Liste des éléments ')->setSubItems([
             MenuItem::linkToCrud('Achats', 'fa fa-list-ul', Achat::class),
-            MenuItem::linkToCrud('Annulations', 'fa fa-list-ul', Annulation::class),
+            MenuItem::linkToCrud('Zone de produit', 'fa fa-list-ul', ZoneProduit::class),
+            // MenuItem::linkToCrud('Annulations', 'fa fa-list-ul', Annulation::class),
             MenuItem::linkToCrud('NewsLetters ', 'fa fa-list-ul', NewsLetter::class),
             MenuItem::linkToCrud('Contacts', 'fa fa-list-ul', Contact::class),
             MenuItem::linkToCrud('Clients', 'fa fa-list-ul', Client::class),

@@ -40,6 +40,7 @@ class ProduitCrudController extends AbstractCrudController
             TextEditorField::new('description')->hideOnIndex()->setColumns(12),
             BooleanField::new('isArrivage')->onlyOnForms()->setColumns(12),
             ColorField::new('couleur')->hideOnIndex()->setColumns(12),
+            CollectionField::new('zoneProduits')->useEntryCrudForm(ZoneProduitCrudController::class)->hideOnIndex()->setColumns(12),
             CollectionField::new('photos')->useEntryCrudForm(PhotoCrudController::class)->hideOnIndex()->setColumns(12),
 
 
