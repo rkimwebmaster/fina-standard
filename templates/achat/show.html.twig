@@ -19,14 +19,17 @@
     <input type="hidden" name="cancelurl" value="{{url('app_achat_annule')}}">
     <input type="hidden" name="declineurl" value="{{url('app_achat_echoue')}}">
     <input type="hidden" name="notifyurl" value="{{url('app_achat_notify')}}">
+
+    {% if not achat.isPaye %}
     <button type="submit" class="btn btn-block btn-primary">
         Payez cash
     </button>
+    {% endif %}
 	</form>
 
 <div class="row">
 				<div class="col col-12">
-    <table class="table">
+    <table class="table table-bordered ">
         <tbody>
             <tr>
                 <th>Date Achat</th>
@@ -38,7 +41,7 @@
             </tr>
             <tr>
                 <th>Frais expeditions</th>
-                <td> USD {{ achat.fraisExpedition }}</td>
+                <td> USD {#{ achat.fraisExpedition }#}</td>
             </tr>
             <tr>
                 <th>Prix Total</th>

@@ -107,7 +107,9 @@ class AchatController extends AbstractController
         }
         $dataPanier=[];
         $total=0;
-        $fraisLivraison=$this->getUser()->getClient()->getZoneLivraisonPreferentielle()->getPrix();
+        //calcul du frais livraison pour chaque produit sommé 
+        // $this->getUser()->getClient()->getZoneLivraisonPreferentielle()->getPrix()
+        $fraisLivraison=500;
         foreach($panier as $id=>$quantite){
             $produit=$produitRepository->find($id);
             if($produit){

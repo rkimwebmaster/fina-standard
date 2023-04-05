@@ -31,6 +31,9 @@ class Categorie
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Produit::class, orphanRemoval: true)]
+    private Collection $produits;
+
     public function __toString()
     {
         return $this->designation;
@@ -62,8 +65,6 @@ class Categorie
         return $this;
     }
 
-    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Produit::class)]
-    private Collection $produits;
 
     public function __construct()
     {
@@ -83,7 +84,7 @@ class Categorie
 
     public function setDesignation(string $designation): self
     {
-        $this->designation = $designation;
+        $this->designation = strtoupper($designation);
 
         return $this;
     }
@@ -96,6 +97,20 @@ class Categorie
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+
+   
+    public function getPhoto1170x500(): ?string
+    {
+        return $this->photo1170x500;
+    }
+
+    public function setPhoto1170x500(?string $photo1170x500): self
+    {
+        $this->photo1170x500 = $photo1170x500;
 
         return $this;
     }
@@ -126,18 +141,6 @@ class Categorie
                 $produit->setCategorie(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getPhoto1170x500(): ?string
-    {
-        return $this->photo1170x500;
-    }
-
-    public function setPhoto1170x500(?string $photo1170x500): self
-    {
-        $this->photo1170x500 = $photo1170x500;
 
         return $this;
     }

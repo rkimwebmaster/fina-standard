@@ -36,9 +36,9 @@ class Client
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Achat::class)]
     private Collection $achats;
 
-    #[ORM\ManyToOne(inversedBy: 'clients')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?ZoneLivraison $zoneLivraisonPreferentielle = null;
+    // #[ORM\ManyToOne(inversedBy: 'clients')]
+    // #[ORM\JoinColumn(nullable: false)]
+    // private ?ZoneLivraison $zoneLivraisonPreferentielle = null;
 
     #[ORM\OneToOne(mappedBy: 'client', cascade: ['persist', 'remove'])]
     private ?User $utilisateur = null;
@@ -153,17 +153,17 @@ class Client
         return $this;
     }
 
-    public function getZoneLivraisonPreferentielle(): ?zoneLivraison
-    {
-        return $this->zoneLivraisonPreferentielle;
-    }
+    // public function getZoneLivraisonPreferentielle(): ?zoneLivraison
+    // {
+    //     return $this->zoneLivraisonPreferentielle;
+    // }
 
-    public function setZoneLivraisonPreferentielle(?zoneLivraison $zoneLivraisonPreferentielle): self
-    {
-        $this->zoneLivraisonPreferentielle = $zoneLivraisonPreferentielle;
+    // public function setZoneLivraisonPreferentielle(?zoneLivraison $zoneLivraisonPreferentielle): self
+    // {
+    //     $this->zoneLivraisonPreferentielle = $zoneLivraisonPreferentielle;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getUtilisateur(): ?User
     {

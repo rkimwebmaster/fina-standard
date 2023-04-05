@@ -4,8 +4,10 @@ namespace App\Entity;
 
 use App\Repository\ZoneProduitRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: ZoneProduitRepository::class)]
+#[UniqueEntity(fields: ['zoneLivraison','produit'], message: 'Ce produit est déja configuré dans cette zone ')]
 class ZoneProduit
 {
     #[ORM\Id]

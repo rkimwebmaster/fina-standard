@@ -38,7 +38,7 @@ class ProduitCrudController extends AbstractCrudController
             ImageField::new('photo624x800Deuxieme')->setBasePath('uploads/images/produits/')->setUploadDir('public/uploads/images/produits/')->hideOnIndex()->setColumns(4),
             UrlField::new('urlVideoYoutube')->hideOnIndex()->setColumns(4),
             TextEditorField::new('description')->hideOnIndex()->setColumns(12),
-            BooleanField::new('isEnStock')->onlyOnForms()->setColumns(12),
+            BooleanField::new('isEnStock')->onlyOnForms()->setColumns(12)->setLabel("Produit en stock"),
             ColorField::new('couleur')->hideOnIndex()->setColumns(12),
             CollectionField::new('zoneProduits')->useEntryCrudForm(ZoneProduitCrudController::class)->hideOnIndex()->setColumns(12),
             CollectionField::new('photos')->useEntryCrudForm(PhotoCrudController::class)->hideOnIndex()->setColumns(12),

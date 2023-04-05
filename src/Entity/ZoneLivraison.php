@@ -45,9 +45,12 @@ class ZoneLivraison
     #[ORM\OneToMany(mappedBy: 'zoneLivraison', targetEntity: ZoneProduit::class)]
     private Collection $zoneProduits;
 
+    #[ORM\OneToMany(mappedBy: 'zoneLivraison', targetEntity: Adresse::class)]
+    private Collection $adresses;
+
     public function __toString()
     {
-        return $this->zone." livré dans ( ".$this->estimationUn." ou ".$this->estimationDeux ." jours).";
+        return strtoupper($this->zone)." livré dans ( ".$this->estimationUn." à ".$this->estimationDeux ." jours).";
     }
 
     public function __construct()
@@ -56,6 +59,7 @@ class ZoneLivraison
         $this->clients = new ArrayCollection();
         $this->achats = new ArrayCollection();
         $this->zoneProduits = new ArrayCollection();
+        $this->adresses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -65,12 +69,12 @@ class ZoneLivraison
 
     public function getZone(): ?string
     {
-        return $this->zone;
+        return strtoupper($this->zone);
     }
 
     public function setZone(string $zone): self
     {
-        $this->zone = $zone;
+        $this->zone = strtoupper($zone);
 
         return $this;
     }
@@ -132,24 +136,12 @@ class ZoneLivraison
     {
         if (!$this->clients->contains($client)) {
             $this->clients->add($client);
-            $client->setZoneLivraisonPreferentielle($this);
         }
 
         return $this;
     }
 
-    public function removeClient(Client $client): self
-    {
-        if ($this->clients->removeElement($client)) {
-            // set the owning side to null (unless already changed)
-            if ($client->getZoneLivraisonPreferentielle() === $this) {
-                $client->setZoneLivraisonPreferentielle(null);
-            }
-        }
-
-        return $this;
-    }
-
+    
     /**
      * @return Collection<int, Achat>
      */
@@ -204,6 +196,36 @@ class ZoneLivraison
             // set the owning side to null (unless already changed)
             if ($zoneProduit->getZoneLivraison() === $this) {
                 $zoneProduit->setZoneLivraison(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Adresse>
+     */
+    public function getAdresses(): Collection
+    {
+        return $this->adresses;
+    }
+
+    public function addAdress(Adresse $adress): self
+    {
+        if (!$this->adresses->contains($adress)) {
+            $this->adresses->add($adress);
+            $adress->setZoneLivraison($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdress(Adresse $adress): self
+    {
+        if ($this->adresses->removeElement($adress)) {
+            // set the owning side to null (unless already changed)
+            if ($adress->getZoneLivraison() === $this) {
+                $adress->setZoneLivraison(null);
             }
         }
 

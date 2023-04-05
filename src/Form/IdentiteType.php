@@ -14,7 +14,9 @@ class IdentiteType extends AbstractType
         $builder
             ->add('nom')
             ->add('postnom')
-            ->add('prenom')
+            ->add('prenom', null, [
+                "label"=>"Prénom",
+            ])
             // ->add('createdAt')
             // ->add('updatedAt')
         ;

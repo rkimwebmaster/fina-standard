@@ -7,9 +7,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
 #[ORM\HasLifecycleCallbacks()]
+#[UniqueEntity(fields: ['nom'], message: 'Un nom existe déjà dans le système.')]
 class Produit
 {
     #[ORM\Id]
@@ -17,7 +20,7 @@ class Produit
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique:true)]
     private ?string $nom = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -68,15 +71,29 @@ class Produit
     #[ORM\Column]
     private ?bool $isSolde = null;
 
-    #[ORM\ManyToOne(inversedBy: 'produits')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Categorie $categorie = null;
-
     #[ORM\OneToMany(mappedBy: 'produit', targetEntity: ZoneProduit::class, orphanRemoval: true, cascade:["persist","remove"])]
+    #[Assert\Valid]
+    #[Assert\Unique()]
     private Collection $zoneProduits;
 
     #[ORM\Column(nullable: true)]
     private ?bool $isEnStock = true;
+
+    #[ORM\ManyToOne(inversedBy: 'produits')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Categorie $categorie = null;
+
+    public function getPrixZoneClient(?ZoneLivraison $zoneLivraison){
+        $zoneProduits=$this->getZoneProduits();
+        foreach($zoneProduits as $zoneProduit){
+            if($zoneProduit->getZoneLivraison()==$zoneLivraison){
+                return $zoneProduit->getMontant();
+            }else{
+                return null;
+            }
+
+        }
+    }
 
     #[ORM\PrePersist()]
     #[ORM\PreUpdate()]
@@ -327,17 +344,6 @@ class Produit
         return $this;
     }
 
-    public function getCategorie(): ?Categorie
-    {
-        return $this->categorie;
-    }
-
-    public function setCategorie(?Categorie $categorie): self
-    {
-        $this->categorie = $categorie;
-
-        return $this;
-    }
 
     public function getPhoto624x800Premier(): ?string
     {
@@ -401,6 +407,18 @@ class Produit
     public function setIsEnStock(?bool $isEnStock): self
     {
         $this->isEnStock = $isEnStock;
+
+        return $this;
+    }
+
+    public function getCategorie(): ?Categorie
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(?Categorie $categorie): self
+    {
+        $this->categorie = $categorie;
 
         return $this;
     }

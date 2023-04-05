@@ -69,7 +69,14 @@ class Achat
 
     #[ORM\ManyToOne(inversedBy: 'achats')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?ZoneLivraison $zoneLivraisonPreferentielle = null;  
+    private ?ZoneLivraison $zoneLivraisonPreferentielle = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $fraisExpedition = null;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Adresse $adresseLivraison = null;  
 
     public function getCodeClient(){
         if($this->getUser()){
@@ -332,6 +339,30 @@ class Achat
     public function setZoneLivraisonPreferentielle(?ZoneLivraison $zoneLivraisonPreferentielle): self
     {
         $this->zoneLivraisonPreferentielle = $zoneLivraisonPreferentielle;
+
+        return $this;
+    }
+
+    public function getFraisExpedition(): ?float
+    {
+        return $this->fraisExpedition;
+    }
+
+    public function setFraisExpedition(?float $fraisExpedition): self
+    {
+        $this->fraisExpedition = $fraisExpedition;
+
+        return $this;
+    }
+
+    public function getAdresseLivraison(): ?Adresse
+    {
+        return $this->adresseLivraison;
+    }
+
+    public function setAdresseLivraison(Adresse $adresseLivraison): self
+    {
+        $this->adresseLivraison = $adresseLivraison;
 
         return $this;
     }

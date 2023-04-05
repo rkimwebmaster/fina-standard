@@ -2,7 +2,8 @@
 {% block innerPage %}
 	Votre panier
 {% endblock %}
-{% block title %}Mon panier  {% endblock %}
+{% block title %}Mon panier
+{% endblock %}
 
 {% block body %}
 
@@ -32,13 +33,13 @@
 										</a>
 									</td>
 									<td class="text-left">
-										<a href="product.html">{{element.produit.nom|upper}}</a>
+										<a href="product.html">
+											{{element.produit.nom|upper}}
+											{% if element.ligneFraisLivraison is same as(null)  %}
+												<small class="text-warning text-sm">Ce produit ne peux pas être livré dans votre zone</small>
+											{% endif %}
+										</a>
 									</td>
-									{# <td class="text-left">
-									{% for categorie in element.produit.categories %}
-									{{ categorie }}
-									{% endfor %}
-									</td> #}
 									<td class="text-left">
 										<div style="max-width: 200px;" class="input-group btn-block">
 											<input type="text" class="form-control quantity" disabled size="1" value="{{element.quantite}}" name="quantity">
@@ -46,14 +47,19 @@
 												<a href="{{url('cart_add',{'id': element.produit.id })}}" class="btn" title="" data-toggle="tooltip" data-original-title="Ajouter ">
 													<i class="fa fa-plus-circle"></i>
 												</a>
-												<a href="{{url('cart_remove',{'id': element.produit.id })}}"  class="btn btn-danger" title="" data-toggle="tooltip" type="button" data-original-title="Soustraire">
+												<a href="{{url('cart_remove',{'id': element.produit.id })}}" class="btn btn-danger" title="" data-toggle="tooltip" type="button" data-original-title="Soustraire">
 													<i class="fa fa-minus-circle"></i>
 												</a>
 											</span>
 										</div>
 									</td>
-									<td class="text-right">${{element.produit.prixVente / 100 }}</td>
-									<td class="text-right">${{element.produit.prixVente * element.quantite }}</td>
+									<td class="text-right">
+										{{element.produit.prixVente|format_currency('USD')}}
+									</td>
+									{% set totalLigne = element.produit.prixVente * element.quantite %}
+									<td class="text-right">
+										{{ totalLigne|format_currency('USD') }}
+									</td>
 								</tr>
 							{% else %}
 								<tr>
@@ -68,30 +74,36 @@
 		</form>
 		<div class="row">
 			{% if dataPanier|length > 0 %}
-			<div class="col-sm-4 col-sm-offset-8">
-				<table class="table table-bordered">
-					<tbody>
-						<tr>
-							<td class="text-right">
-								<strong>Sous-Total:</strong>
-							</td>
-							<td class="text-right">$ {{total}}</td>
-						</tr>
-						<tr>
-							<td class="text-right">
-								<strong>Frais Expeditions :</strong>
-							</td>
-							<td class="text-right">$ {{ fraisLivraison }} </td>
-						</tr>
-						<tr>
-							<td class="text-right">
-								<strong>Grand Total:</strong>
-							</td>
-							<td class="text-right">$ {{grandTotal}}</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+				<div class="col-sm-4 col-sm-offset-8">
+					<table class="table table-bordered">
+						<tbody>
+							<tr>
+								<td class="text-right">
+									<strong>Sous-Total:</strong>
+								</td>
+								<td class="text-right">
+									{{total|format_currency('USD')}}
+								</td>
+							</tr>
+							<tr>
+								<td title="les Frais Expeditions varient en fonction de votre adresse livraison." class="text-right">
+									<strong>Expéditions :</strong>
+								</td>
+								<td class="text-right">
+									{{fraisLivraison|format_currency('USD')}}
+								</td>
+							</tr>
+							<tr>
+								<td class="text-right">
+									<strong>Grand Total:</strong>
+								</td>
+								<td class="text-right">
+									{{grandTotal|format_currency('USD')}}
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			{% endif %}
 		</div>
 		<form action="{{url('app_produit_index')}}">
@@ -100,15 +112,15 @@
 		{# <a href="class="btn pull-left mt_30""> Continuer les achats </a> #}
 		</form>
 		{% if dataPanier|length > 0 %}
-		<form action="{{url('app_panier_delete_all')}}">
-			<input
-			class="btn btn-danger pull-left mt_30" type="submit" value="Vider le panier  "/>
-		{# <a href="class="btn pull-left mt_30""> Continuer les achats </a> #}
-		</form>
-		<form action="{{url('app_achat_new')}}">
+			<form action="{{url('app_panier_delete_all')}}">
+				<input
+				class="btn btn-danger pull-left mt_30" type="submit" value="Vider le panier  "/>
+			{# <a href="class="btn pull-left mt_30""> Continuer les achats </a> #}
+			</form>
+			<a class="btn pull-right btn-success mt_30" data-toggle="modal" data-target="#myModal2">Suivant</a> 
+			{# <form action="{{url('app_achat_new')}}">
 			<input class="btn btn-success pull-right mt_30" type="submit" value="Etape suivante  "/>
-		</form>
-		{% endif %}
+		</form> #} {% endif %}
+		</div>
 	</div>
-</div></div>
 {% endblock %}

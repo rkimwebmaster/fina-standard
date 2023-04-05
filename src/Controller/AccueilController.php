@@ -190,7 +190,7 @@ class AccueilController extends AbstractController
         $newsLetter = new NewsLetter();
         $newsLetter->setEmail($email);
         $newsLetterRepository->save($newsLetter, true);
-        $this->addFlash("success", "Merci pour votre inscription à la newsletter.");
+        $this->addFlash("success", "Merci pour votre inscription à la newsletter, Vous recevrez desormais des belles infos.");
         return $this->redirectToRoute('app_accueil', [], Response::HTTP_SEE_OTHER);
         // return $this->redirect();
     }

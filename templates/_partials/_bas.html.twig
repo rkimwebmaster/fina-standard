@@ -1,3 +1,34 @@
+{# le popup de confirmation de l'adresse  #}
+
+<!-- Modal -->
+<div class="modal fade modal-dark" id="myModal2" role="dialog">
+	<div
+		class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Confirmation de votre adresse de livraison</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					Some text in the modal. Some text in the modal. Some text in the modal.Some text in the modal.Some text in the modal.
+							  Some text in the modal. Some text in the modal. Some text in the modal.Some text in the modal.Some text in the modal.
+							  Some text in the modal. Some text in the modal. Some text in the modal.Some text in the modal.Some text in the modal.
+							  Some text in the modal. Some text in the modal. Some text in the modal.Some text in the modal.Some text in the modal.
+				</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary pull-left" data-dismiss="modal">modifier adresse</button>
+				<button type="button" class="btn btn-success" data-dismiss="modal">continuer achats </button>
+			</div>
+		</div>
+
+	</div>
+</div>
+{# fin confirmation adresse  #}
+
 <div class="footer pt_60">
 	<div class="container">
 		<div class="newsletters mt_30 mb_50">
@@ -76,12 +107,12 @@
 			<div class="col-md-3 footer-block">
 				<h6 class="footer-title ptb_20">Contacts</h6>
 				<ul>
-					<li>Siège social,</li>
+					<li>Siège social : </li>
 					{% if entreprise is defined and entreprise|length > 0 %}
 						<li>{{entreprise.adresse|title}}</li>
 						<li>
-							<a href="https://api.whatsapp.com/send?phone=243824458059">
-								{{entreprise.phoneNumber}}
+							<a href="https://api.whatsapp.com/send?phone=243824458059" target="_blank">
+								{{entreprise.whatsappNumber}}
 							</a>
 						</li>
 						<li>
@@ -155,6 +186,7 @@
 <script src="{{asset('js/owl.carousel.min.js')}}"></script>
 <script src="{{asset('js/bootstrap.min.js')}}"></script>
 <script src="{{asset('js/jquery.magnific-popup.js')}}"></script>
+<script src="{{asset('js/jquery.firstVisitPopup.js')}}"></script>
 <script src="{{asset('js/custom.js')}}"></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAT3mI0RI16q19Oxv93gSxN0cF0wfxWN6w"></script>
 <script src="{{asset('js/map.js')}}"></script>

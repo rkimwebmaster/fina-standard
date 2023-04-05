@@ -55,17 +55,17 @@
 		<div class="wrapper">
 			<div id="subscribe-me" class="modal animated fade in" role="dialog" data-keyboard="true" tabindex="-1">
 				<div class="newsletter-popup">
-					<img class="offer" src="images/newsbg.jpg" alt="offer">
+					<img class="offer" src="{{asset('images/briquet1.png')}}" alt="offer">
 					<div class="newsletter-popup-static newsletter-popup-top">
 						<div class="popup-text">
 							<div class="popup-title">50%
 								<span>off</span>
 							</div>
 							<div class="popup-desc">
-								<div>Connecte toi et gagne 50% de rabais sur ta commande</div>
+								<div>Connecte-toi et gagnes 50% de rabais sur ta commande</div>
 							</div>
 						</div>
-						<form onsubmit="return  validatpopupemail();" method="post">
+						<form action="{{url('app_creationNewsLetter')}}" onsubmit="return  validatpopupemail();" method="post">
 							<div class="form-group required">
 								<input type="email" name="email-popup" id="email-popup" placeholder="Entre votre mail" class="form-control input-lg" required/>
 								<button type="submit" class="btn btn-default btn-lg" id="email-popup-submit">Je souscris</button>
@@ -103,10 +103,22 @@
 													<a href="{{url('app_user_show', {id: app.user.id })}}">Mon profile
 													</a>
 												</li>
+												{% if app.user.client %}
+												<li>
+													<a href="{{url('app_adresse_show', {id: app.user.client.adresse.id })}}">Mon adresse
+													</a>
+												</li>
+												{% endif %}
+
+												{% if app.user.client %}
+												{% if app.user.client.achats|length > 0 %}
 												<li>
 													<a href="{{url('app_achat_index')}}">Mes achats
 													</a>
 												</li>
+												{% endif %}
+												{% endif %}
+
 												<li>
 													<a href="{{url('app_logout')}}">Déconnexion</a>
 												</li>
@@ -159,7 +171,11 @@
 							<div
 								class="col-xs-6 col-sm-4 shopcart">
 								{# panier flottant  #}
+								{% if app.user %}
+								{% if app.user.client %}
 								{{ render (url('panier_flottant'))}}
+								{% endif %}
+								{% endif %}
 
 							</div>
 						</div>

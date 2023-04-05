@@ -26,6 +26,10 @@ class Adresse
     #[ORM\Column(length: 14)]
     private ?string $telephone = null;
 
+    #[ORM\ManyToOne(inversedBy: 'adresses')]
+    #[ORM\Column(nullable:false)]
+    private ?ZoneLivraison $zoneLivraison = null;
+
     // #[ORM\Column(length: 255)]
     // private ?string $email = null;
     
@@ -104,4 +108,16 @@ class Adresse
 
     //     return $this;
     // }
+
+    public function getZoneLivraison(): ?ZoneLivraison
+    {
+        return $this->zoneLivraison;
+    }
+
+    public function setZoneLivraison(?ZoneLivraison $zoneLivraison): self
+    {
+        $this->zoneLivraison = $zoneLivraison;
+
+        return $this;
+    }
 }

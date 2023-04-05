@@ -8,7 +8,7 @@
 			<div class="breadcrumb ptb_20">
 				<h1>
 					{% block ariane1 %}
-						Service de qualité 
+						Service de qualité
 					{% endblock %}
 				</h1>
 				<ul>
@@ -59,42 +59,78 @@
 
 			</div>
 			<div class="left-special left-sidebar-widget mb_50">
-            <div class="heading-part mb_20 ">
-              <h2 class="main_title">Arrivage</h2>
-            </div>
-            <div id="left-special" class="owl-carousel">
-              <ul class="row ">
-
 				{% for categorie in categories %}
 					{% for produit in categorie.produits %}
-					{% if produit.isArrivage %}
-                <li class="item product-layout-left mb_20">
-                  <div class="product-list col-xs-4">
-                    <div class="product-thumb">
-                      <div class="image product-imageblock"> <a href="product_detail_page.html">
-					   	<img class="img-responsive" title="iPod Classic" alt="iPod Classic" src="{{asset('uploads/images/produits/' ~ produit.photoPrincipale)}}" alt="{{produit.nom}}" title="{{produit.nom}}"> 
-						
-						<img class="img-responsive" title="iPod Classic" alt="iPod Classic" src="{{asset('uploads/images/produits/' ~ produit.photoPrincipaleNoirBlanc)}}" alt="{{produit.nom}}" title="{{produit.nom}}"> </a> 
-					   </div>
-                    </div>
-                  </div>
-                  <div class="col-xs-8">
-                    <div class="caption product-detail">
-                      <h6 class="product-name"><a href="#">{{produit}}</a></h6>
-                      <div class="rating"> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i><i class="fa fa-star fa-stack-1x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i><i class="fa fa-star fa-stack-1x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i><i class="fa fa-star fa-stack-1x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i><i class="fa fa-star fa-stack-1x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i><i class="fa fa-star fa-stack-x"></i></span> </div>
-                      <span class="price"><span class="amount"><span class="currencySymbol">$ </span>{{produit.prixVente / 100 }}</span>
-                      </span>
-                    </div>
-                  </div>
-                </li>
-					{% endif %}
+						{% if produit.isArrivage %}
+							<div class="heading-part mb_20 ">
+								<h2 class="main_title">Arrivage</h2>
+							</div>
+						{% endif %}
+					{% endfor %}
 				{% endfor %}
-				{% endfor %}
+				<div id="left-special" class="owl-carousel">
+					<ul class="row ">
 
-              </ul>
-              
-            </div>
-          </div>
+						{% for categorie in categories %}
+							{% for produit in categorie.produits %}
+								{% if produit.isArrivage %}
+									<li class="item product-layout-left mb_20">
+										<div class="product-list col-xs-4">
+											<div class="product-thumb">
+												<div class="image product-imageblock">
+													<a href="{{url('product_view', {id:produit.id} )}}">
+														<img class="img-responsive" src="{{asset('uploads/images/produits/' ~ produit.photo624x800Premier)}}" alt="{{produit.nom}}" title="{{produit.nom}}">
+
+														<img class="img-responsive" src="{{asset('uploads/images/produits/' ~ produit.photo624x800Deuxieme)}}" alt="{{produit.nom}}" title="{{produit.nom}}">
+													</a>
+												</div>
+											</div>
+										</div>
+										<div class="col-xs-8">
+											<div class="caption product-detail">
+												<h6 class="product-name">
+													<a href="#">{{produit}}</a>
+												</h6>
+												<div class="rating">
+													<span class="fa fa-stack">
+														<i class="fa fa-star-o fa-stack-1x"></i>
+														<i class="fa fa-star fa-stack-1x"></i>
+													</span>
+													<span class="fa fa-stack">
+														<i class="fa fa-star-o fa-stack-1x"></i>
+														<i class="fa fa-star fa-stack-1x"></i>
+													</span>
+													<span class="fa fa-stack">
+														<i class="fa fa-star-o fa-stack-1x"></i>
+														<i class="fa fa-star fa-stack-1x"></i>
+													</span>
+													<span class="fa fa-stack">
+														<i class="fa fa-star-o fa-stack-1x"></i>
+														<i class="fa fa-star fa-stack-1x"></i>
+													</span>
+													<span class="fa fa-stack">
+														<i class="fa fa-star-o fa-stack-1x"></i>
+														<i class="fa fa-star fa-stack-x"></i>
+													</span>
+												</div>
+												<span class="price">
+													<span class="amount">
+														<span class="currencySymbol">$
+														</span>
+														{{produit.prixVente / 100 }}</span>
+												</span>
+											</div>
+										</div>
+									</li>
+								{% endif %}
+							{% endfor %}
+						{% endfor %}
+
+					</ul>
+
+				</div>
+
+			</div>
 
 		</div>
 		<div class="col-sm-8 col-lg-9 mtb_20">
@@ -631,30 +667,30 @@
 	</div>
 
 	{% if partenaires is defined and partenaires| length > 0 %}
-	<div class="container">
-		<div class="row">
-			<div id="brand_carouse" class="ptb_30 text-center">
-				<div class="type-01">
-					<div class="heading-part mb_20 ">
-						<h2 class="main_title">Nos Partenaires
-						</h2>
-					</div>
-					<div class="row">
-						<div class="col-sm-12">
-							<div class="brand owl-carousel ptb_20">
-								{% for partenaire in partenaires %}
-									<div class="item text-center">
-										<a href="#"><img src="{{asset('uploads/images/partenaires/' ~ partenaire.logo215x140)}}" alt="{{partenaire.nom}}" title="{{partenaire.nom}}" class="img-responsive"/></a>
-									</div>
-								{% endfor %}
+		<div class="container">
+			<div class="row">
+				<div id="brand_carouse" class="ptb_30 text-center">
+					<div class="type-01">
+						<div class="heading-part mb_20 ">
+							<h2 class="main_title">Nos Partenaires
+							</h2>
+						</div>
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="brand owl-carousel ptb_20">
+									{% for partenaire in partenaires %}
+										<div class="item text-center">
+											<a href="#"><img src="{{asset('uploads/images/partenaires/' ~ partenaire.logo215x140)}}" alt="{{partenaire.nom}}" title="{{partenaire.nom}}" class="img-responsive"/></a>
+										</div>
+									{% endfor %}
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-{% endif %}
+	{% endif %}
 
 
 </div>

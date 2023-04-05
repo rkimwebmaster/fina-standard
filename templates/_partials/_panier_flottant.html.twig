@@ -16,7 +16,9 @@
 							</td>
 							<td class="text-left product-name">
 								<a href="#">{{element.produit.nom|upper}}</a>
-								<span class="text-left price">${{element.produit.prixVente }}</span>
+								<span class="text-left price">
+								{{ element.produit.prixVente|format_currency('USD') }}
+								</span>
 								<input disabled class="cart-qty" name="product_quantity" min="1" value="{{element.quantite}}" type="number">
 							</td>
 							<td class="text-center">
@@ -44,19 +46,25 @@
 						<td class="text-right">
 							<strong>Sous-Total</strong>
 						</td>
-						<td class="text-right">$ {{total}}</td>
+						<td class="text-right">
+						{{ total|format_currency('USD') }}
+						</td>
 					</tr>
 					<tr>
 						<td class="text-right">
 							<strong>Frais Livraison</strong>
 						</td>
-						<td class="text-right">$ {{fraisLivraison }} </td>
+						<td class="text-right">
+							{{ fraisLivraison|format_currency('USD') }}
+						</td>
 					</tr>
 					<tr>
 						<td class="text-right">
 							<strong>Grand Total</strong>
 						</td>
-						<td class="text-right">$ {{grandTotal}}</td>
+						<td class="text-right">
+							{{ grandTotal|format_currency('USD') }}
+						</td>
 					</tr>
 				</tbody>
 			</table>
@@ -64,13 +72,12 @@
 		<li>
 			{% if dataPanier|length > 0 %}
 				<form action="{{url('cart_index')}}">
-					<input
-					title="Voir le panier" class="btn btn-danger pull-left mt_30" type="submit" value="Panier"/>
-				{# <a href="class="btn pull-left mt_30""> Continuer les achats </a> #}
+					<input title="Voir le panier" class="btn btn-danger pull-left mt_30" type="submit" value="Panier"/>
+					<a class="btn pull-right btn-success mt_30" data-toggle="modal" data-target="#myModal2">Suivant</a>
 				</form>
-				<form action="{{url('app_achat_new')}}">
-					<input title="Etape suivante" class="btn btn-success pull-right mt_30" type="submit" value="Suivant "/>
-				</form>
+				{# <form action="{{url('app_achat_new')}}">
+									<input title="Etape suivante" class="btn btn-success pull-right mt_30" type="submit" value="Suivant "/>
+								</form> #}
 			{% endif %}
 		</li>
 	</ul>
